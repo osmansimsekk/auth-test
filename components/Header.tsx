@@ -3,7 +3,7 @@
 import * as React from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { Menu, X, User, UserPlus } from "lucide-react";
+import { Menu, X, User, UserPlus, LogOut } from "lucide-react";
 
 import {
   NavigationMenu,
@@ -17,10 +17,34 @@ import {
 import { Button } from "@/components/ui/button";
 import { navigationData } from "../public/data/contants";
 import { useIsMobile } from "@/hooks/useMobile";
+import { signOut } from "@/lib/auth-client";
+import { toast } from "sonner";
+import { useRouter } from "next/navigation";
+import { auth } from "@/lib/auth";
 
-const Header = () => {
+const Header = ({
+  session,
+}: {
+  session: Awaited<ReturnType<typeof auth.api.getSession>>;
+}) => {
   const isMobile = useIsMobile();
   const [menuOpen, setMenuOpen] = React.useState(false);
+
+  const router = useRouter();
+
+  const handleSignOut = async () => {
+    await signOut({
+      fetchOptions: {
+        onError: (ctx) => {
+          toast.error(ctx.error.message);
+        },
+        onSuccess: () => {
+          toast.success("Başarıyla çıkış yaptınız!");
+          router.replace("/sign-in");
+        },
+      },
+    });
+  };
 
   return (
     <>
@@ -67,18 +91,40 @@ const Header = () => {
 
         {/* Desktop Auth */}
         <div className="hidden lg:flex gap-4">
-          <Link href="/sign-in">
-            <Button variant="outline" className="gap-2">
-              <User className="h-4 w-4" />
-              Giriş Yap
-            </Button>
-          </Link>
-          <Link href="/sign-up">
-            <Button className="gap-2">
-              <UserPlus className="h-4 w-4" />
-              Üye Ol
-            </Button>
-          </Link>
+          {!session ? (
+            <>
+              <Link href="/sign-in">
+                <Button variant="outline" className="gap-2">
+                  <User className="h-4 w-4" />
+                  Giriş Yap
+                </Button>
+              </Link>
+              <Link href="/sign-up">
+                <Button className="gap-2">
+                  <UserPlus className="h-4 w-4" />
+                  Üye Ol
+                </Button>
+              </Link>
+            </>
+          ) : (
+            <div className="flex gap-4 items-center">
+              <Link href="/profile">
+                <Button>
+                  <User />
+                  <p>Profil</p>
+                </Button>
+              </Link>
+              <Button
+                variant="destructive"
+                onClick={async () => {
+                  await handleSignOut();
+                }}
+              >
+                <span>Çıkış Yap</span>
+                <LogOut />
+              </Button>
+            </div>
+          )}
         </div>
 
         {/* Mobile Hamburger */}
@@ -147,19 +193,36 @@ const Header = () => {
 
             {/* Auth */}
             <div className="pt-6 border-t flex flex-col gap-3">
-              <Link href="/sign-in" onClick={() => setMenuOpen(false)}>
-                <Button variant="outline" className="w-full h-11 text-sm gap-2">
-                  <User className="h-4 w-4" />
-                  Giriş Yap
-                </Button>
-              </Link>
+              {!session ? (
+                <>
+                  <Link href="/sign-in" onClick={() => setMenuOpen(false)}>
+                    <Button
+                      variant="outline"
+                      className="w-full h-11 text-sm gap-2"
+                    >
+                      <User className="h-4 w-4" />
+                      Giriş Yap
+                    </Button>
+                  </Link>
 
-              <Link href="/sign-up" onClick={() => setMenuOpen(false)}>
-                <Button className="w-full h-11 text-sm gap-2">
-                  <UserPlus className="h-4 w-4" />
-                  Üye Ol
+                  <Link href="/sign-up" onClick={() => setMenuOpen(false)}>
+                    <Button className="w-full h-11 text-sm gap-2">
+                      <UserPlus className="h-4 w-4" />
+                      Üye Ol
+                    </Button>
+                  </Link>
+                </>
+              ) : (
+                <Button
+                  onClick={async () => {
+                    await handleSignOut();
+                    setMenuOpen(false);
+                  }}
+                >
+                  <LogOut />
+                  Çıkış Yap
                 </Button>
-              </Link>
+              )}
             </div>
           </div>
         </nav>

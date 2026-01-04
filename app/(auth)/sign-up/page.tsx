@@ -9,19 +9,21 @@ import { Form } from "@/components/ui/form";
 import InputField from "@/components/form/InputField";
 import FormFooter from "@/components/form/FormFooter";
 import SelectField from "@/components/form/SelectField";
-import { signUp } from "@/lib/actions/auth.actions";
 import CountrySelectField from "@/components/form/CountrySelectField";
 import { countries } from "@/public/data/contants";
+import { toast } from "sonner";
+import { signUp } from "@/lib/auth-client";
+import { redirect } from "next/navigation";
 
 const formSchema = z.object({
   name: z.string().min(2, { message: "Name is required." }),
-  surname: z.string().min(2, { message: "Surname is required." }),
-  gender: z.enum(["Erkek", "Kadın", ""]),
+  // surname: z.string().min(2, { message: "Surname is required." }),
+  // gender: z.enum(["Erkek", "Kadın", ""]),
   email: z
     .string()
     .min(1, { message: "Email zorunludur." })
     .email({ message: "Invalid email address." }),
-  country: z.string().min(1, "Country is required"),
+  // country: z.string().min(1, "Country is required"),
   password: z.string().min(8, {
     message: "Password must be at least 8 characters.",
   }),
@@ -32,24 +34,45 @@ const SignUp = () => {
     resolver: zodResolver(formSchema),
     defaultValues: {
       name: "",
-      surname: "",
+      // surname: "",
       email: "",
       password: "",
-      gender: "",
-      country: "TR",
+      // gender: "",
+      // country: "TR",
     },
     mode: "onBlur",
   });
 
-  function onSubmit(values: z.infer<typeof formSchema>) {
-    signUp(values);
+  async function onSubmit(values: z.infer<typeof formSchema>) {
+    const { name, email, password } = values;
+    await signUp.email(
+      {
+        name,
+        email,
+        password,
+      },
+      {
+        onRequest: () => {},
+        onResponse: () => {},
+        onError: (ctx) => {
+          toast.error(ctx.error.message);
+        },
+        onSuccess: () => {
+          toast.success("Başarıyla Kayıt Oldunuz!");
+          redirect("/profile");
+        },
+      }
+    );
+
+    console.log(name, email, password);
   }
 
   return (
     <div className="lg:w-1/2 w-screen flex items-center justify-center mx-auto lg:px-20 px-10 flex-col">
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)}>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-x-6">
+          {/* <div className="grid grid-cols-1 md:grid-cols-2 gap-x-6"> */}
+          <div>
             <InputField
               control={form.control}
               name="name"
@@ -58,19 +81,20 @@ const SignUp = () => {
               error={form.formState.errors.name?.message}
             />
 
-            <InputField
+            {/* <InputField
               control={form.control}
               name="surname"
               label="Soyad"
               placeholder="Soyadınızı girin"
               error={form.formState.errors.surname?.message}
-            />
+            /> */}
 
             <div className="md:col-span-2">
               <InputField
                 control={form.control}
                 name="email"
                 label="Email"
+                type="email"
                 placeholder="nike@tr.com"
                 error={form.formState.errors.email?.message}
               />
@@ -86,7 +110,7 @@ const SignUp = () => {
                 error={form.formState.errors.password?.message}
               />
 
-              <div className="lg:grid md:grid-cols-1 lg:grid-cols-2 gap-6 lg:mt-4">
+              {/* <div className="lg:grid md:grid-cols-1 lg:grid-cols-2 gap-6 lg:mt-4">
                 <CountrySelectField
                   name="country"
                   label="Ülke"
@@ -104,7 +128,7 @@ const SignUp = () => {
                     { label: "Kadın", value: "Kadın" },
                   ]}
                 />
-              </div>
+              </div> */}
             </div>
           </div>
 
