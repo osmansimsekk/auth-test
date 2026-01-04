@@ -8,7 +8,10 @@ import { Button } from "@/components/ui/button";
 import { Form } from "@/components/ui/form";
 import InputField from "@/components/form/InputField";
 import FormFooter from "@/components/form/FormFooter";
-import { signIn } from "@/lib/actions/auth.actions";
+import { toast } from "sonner";
+import { signIn } from "@/lib/auth-client";
+import { useRouter } from "next/navigation";
+import { Spinner } from "@/components/ui/spinner";
 
 const formSchema = z.object({
   email: z
@@ -28,11 +31,31 @@ const SignIn = () => {
       email: "",
       password: "",
     },
+
     mode: "onBlur",
   });
+  const router = useRouter();
 
-  function onSubmit(values: z.infer<typeof formSchema>) {
-    signIn(values);
+  async function onSubmit(values: z.infer<typeof formSchema>) {
+    try {
+      await signIn.email(
+        {
+          ...values,
+        },
+
+        {
+          onError: (ctx) => {
+            toast.error(ctx.error.message);
+          },
+          onSuccess: () => {
+            toast.success("Başarıyla Giriş Yaptınız.");
+            router.replace("/");
+          },
+        }
+      );
+    } catch (e) {
+      console.error(e);
+    }
   }
 
   return (
@@ -42,6 +65,7 @@ const SignIn = () => {
           <InputField
             control={form.control}
             name="email"
+            type="email"
             placeholder="nike@tr.com"
             label="Email"
             error={form.formState.errors.email?.message}
@@ -57,7 +81,17 @@ const SignIn = () => {
           />
 
           <div className="flex flex-col gap-4 mt-5">
-            <Button type="submit">Giriş Yap</Button>
+            <Button type="submit" disabled={form.formState.isSubmitting}>
+              {form.formState.isSubmitting ? (
+                <div className="flex gap-1 items-center">
+                  <Spinner />
+                  <p>Giriş Yapılıyor...</p>
+                </div>
+              ) : (
+                "Giriş Yap"
+              )}
+            </Button>
+
             <FormFooter />
           </div>
         </form>
