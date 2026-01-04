@@ -74,7 +74,7 @@ const CountrySelectField = <T extends FieldValues>({
                 </FormControl>
               </PopoverTrigger>
 
-              <PopoverContent className="p-0 w-[250px]">
+              <PopoverContent className="p-0 w-62.5">
                 <Command>
                   <CommandInput
                     placeholder="Ülkenizi Seçiniz..."

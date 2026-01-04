@@ -93,10 +93,9 @@ const Header = () => {
         </div>
       </header>
 
-      {/* ================= FULLSCREEN MOBILE MENU ================= */}
       <div
         className={`
-    fixed inset-0 z-[9999]
+    fixed inset-0 z-9999
     flex items-center justify-center
     bg-background/90
     transition-all duration-300 ease-out
