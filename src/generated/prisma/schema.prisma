@@ -14,20 +14,29 @@ enum Gender {
   OTHER
 }
 
+enum UserRole {
+  ADMIN
+  USER
+}
+
 model User {
   id        String   @id @default(uuid())
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
   name     String
-  lastName String?
+  lastName String
 
   email         String  @unique
   emailVerified Boolean @default(false)
   image         String?
 
-  gender  Gender?
-  country String? @db.Char(2)
+  gender     Gender?   @default(MALE)
+  country    String?   @default("TR") @db.Char(2)
+  role       UserRole  @default(USER)
+  banned     Boolean?  @default(false)
+  banReason  String?
+  banExpires DateTime?
 
   sessions Session[]
   accounts Account[]
@@ -41,11 +50,12 @@ model Session {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  expiresAt DateTime
-  token     String   @unique
-  ipAddress String?
-  userAgent String?
-  userId    String
+  expiresAt      DateTime
+  token          String   @unique
+  ipAddress      String?
+  userAgent      String?
+  userId         String
+  impersonatedBy String?
 
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 

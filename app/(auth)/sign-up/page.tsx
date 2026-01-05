@@ -13,7 +13,7 @@ import { Spinner } from "@/components/ui/spinner";
 import { signUpEmailAction } from "@/lib/actions/sign-email.action";
 import { useRouter } from "next/navigation";
 import { signUpFormSchema as formSchema } from "@/lib/formSchemas";
-import { SignInInput, SignUpInput } from "@/types";
+import { SignUpInput } from "@/types";
 import { countryOptions } from "@/lib/countries";
 
 const SignUp = () => {
@@ -32,7 +32,7 @@ const SignUp = () => {
     mode: "onBlur",
   });
 
-  async function onSubmit(values: SignInInput) {
+  async function onSubmit(values: SignUpInput) {
     const { error } = await signUpEmailAction(values);
     if (error) toast.error(error);
     else {

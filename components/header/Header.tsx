@@ -22,12 +22,14 @@ import { useState } from "react";
 
 import { DarkModeToggle } from "@/components/header/DarkModeToggle";
 import { signOutAction } from "@/lib/actions/sign-email.action";
-import { useSession } from "@/lib/auth-client";
 import { GuestButtons } from "./GuestButtons";
+import { auth } from "@/lib/auth";
 
-const Header = () => {
-  const { data: session, isPending } = useSession();
-
+const Header = ({
+  session,
+}: {
+  session: Awaited<ReturnType<typeof auth.api.getSession>>;
+}) => {
   const isMobile = useIsMobile();
   const [menuOpen, setMenuOpen] = useState(false);
   const [isLoggingOut, setLoggingOut] = useState(false);
@@ -99,7 +101,7 @@ const Header = () => {
         <div className="hidden lg:flex gap-4 items-center">
           <DarkModeToggle />
 
-          {isPending ? null : !session ? (
+          {!session ? (
             <GuestButtons variant="desktop" />
           ) : (
             <div className="flex gap-4 items-center">

@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { headers } from "next/headers";
 import { auth } from "@/lib/auth";
 
-const protectedRoutes = ["/profile"];
+const protectedRoutes = ["/profile", "/admin/dashboard"];
 
 export default async function proxy(request: NextRequest) {
   const session = await auth.api.getSession({
