@@ -1,12 +1,13 @@
 import { auth } from "@/lib/auth";
 import { headers } from "next/headers";
+import { redirect } from "next/navigation";
 
 const Profile = async () => {
   const session = await auth.api.getSession({
     headers: await headers(),
   });
 
-  if (!session) return <p className="text-destructive">unathoriezed</p>;
+  if (!session) redirect("/sign-in");
 
   return (
     <div className="min-h-screen flex justify-center items-center overflow-x-hidden">

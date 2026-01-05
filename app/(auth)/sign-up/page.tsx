@@ -12,67 +12,58 @@ import SelectField from "@/components/form/SelectField";
 import CountrySelectField from "@/components/form/CountrySelectField";
 import { countries } from "@/public/data/contants";
 import { toast } from "sonner";
-import { signUp } from "@/lib/auth-client";
-import { redirect } from "next/navigation";
+import { Spinner } from "@/components/ui/spinner";
+import { signUpWithProfile } from "@/lib/actions/signup.action";
+import { useRouter } from "next/navigation";
 
-const formSchema = z.object({
+export const formSchema = z.object({
   name: z.string().min(2, { message: "Name is required." }),
-  // surname: z.string().min(2, { message: "Surname is required." }),
-  // gender: z.enum(["Erkek", "Kadın", ""]),
+  lastName: z.string().min(2, { message: "Surname is required." }),
+  gender: z.enum(["MALE", "FEMALE"]),
   email: z
     .string()
     .min(1, { message: "Email zorunludur." })
     .email({ message: "Invalid email address." }),
-  // country: z.string().min(1, "Country is required"),
+  country: z.enum(["TR", "US", "DE", "FR", "GB"], {
+    message: "County required.",
+  }),
   password: z.string().min(8, {
     message: "Password must be at least 8 characters.",
   }),
 });
 
 const SignUp = () => {
+  const router = useRouter();
+
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
       name: "",
-      // surname: "",
+      lastName: "",
       email: "",
       password: "",
-      // gender: "",
-      // country: "TR",
+      gender: "MALE",
+      country: "TR",
     },
     mode: "onBlur",
   });
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
-    const { name, email, password } = values;
-    await signUp.email(
-      {
-        name,
-        email,
-        password,
-      },
-      {
-        onRequest: () => {},
-        onResponse: () => {},
-        onError: (ctx) => {
-          toast.error(ctx.error.message);
-        },
-        onSuccess: () => {
-          toast.success("Başarıyla Kayıt Oldunuz!");
-          redirect("/profile");
-        },
-      }
-    );
-
-    console.log(name, email, password);
+    try {
+      await signUpWithProfile({ ...values });
+      toast.success("Başarıyla kayıt oldunuz!");
+      router.replace("/");
+    } catch (error) {
+      toast.error("Bir hata meydana geldi!");
+      console.error(error);
+    }
   }
 
   return (
     <div className="lg:w-1/2 w-screen flex items-center justify-center mx-auto lg:px-20 px-10 flex-col">
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)}>
-          {/* <div className="grid grid-cols-1 md:grid-cols-2 gap-x-6"> */}
-          <div>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-x-6">
             <InputField
               control={form.control}
               name="name"
@@ -81,20 +72,19 @@ const SignUp = () => {
               error={form.formState.errors.name?.message}
             />
 
-            {/* <InputField
+            <InputField
               control={form.control}
-              name="surname"
+              name="lastName"
               label="Soyad"
               placeholder="Soyadınızı girin"
-              error={form.formState.errors.surname?.message}
-            /> */}
+              error={form.formState.errors.lastName?.message}
+            />
 
             <div className="md:col-span-2">
               <InputField
                 control={form.control}
                 name="email"
                 label="Email"
-                type="email"
                 placeholder="nike@tr.com"
                 error={form.formState.errors.email?.message}
               />
@@ -110,7 +100,7 @@ const SignUp = () => {
                 error={form.formState.errors.password?.message}
               />
 
-              {/* <div className="lg:grid md:grid-cols-1 lg:grid-cols-2 gap-6 lg:mt-4">
+              <div className="lg:grid md:grid-cols-1 lg:grid-cols-2 gap-6 lg:mt-4">
                 <CountrySelectField
                   name="country"
                   label="Ülke"
@@ -124,16 +114,27 @@ const SignUp = () => {
                   label="Cinsiyet"
                   control={form.control}
                   options={[
-                    { label: "Erkek", value: "Erkek" },
-                    { label: "Kadın", value: "Kadın" },
+                    { label: "Erkek", value: "MALE" },
+                    { label: "Kadın", value: "FEMALE" },
                   ]}
                 />
-              </div> */}
+              </div>
             </div>
           </div>
 
           <div className="flex flex-col gap-4 mt-5">
-            <Button type="submit">Kayıt Ol</Button>
+            <Button type="submit">
+              <div className="flex gap-2 items-center">
+                {form.formState.isSubmitting ? (
+                  <>
+                    <Spinner />
+                    <span>Kayıt Olunuyor...</span>
+                  </>
+                ) : (
+                  <span>Kayıt Ol</span>
+                )}
+              </div>
+            </Button>
             <FormFooter />
           </div>
         </form>

@@ -8,29 +8,34 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model Post {
+enum Gender {
+  MALE
+  FEMALE
+  OTHER
+}
+
+enum Country {
+  TR
+  US
+  DE
+  FR
+  GB
+}
+
+model User {
   id        String   @id @default(uuid())
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  title   String
-  content String
+  name     String
+  lastName String?
 
-  userId String
-  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
-
-  @@map("posts")
-}
-
-model User {
-  id        String   @id
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-
-  name          String
   email         String  @unique
   emailVerified Boolean @default(false)
   image         String?
+
+  gender  Gender?
+  country Country?
 
   sessions Session[]
   accounts Account[]
@@ -40,7 +45,7 @@ model User {
 }
 
 model Session {
-  id        String   @id
+  id        String   @id @default(uuid())
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
@@ -56,13 +61,14 @@ model Session {
 }
 
 model Account {
-  id        String   @id
+  id        String   @id @default(uuid())
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  accountId             String
-  providerId            String
-  userId                String
+  accountId  String
+  providerId String
+  userId     String
+
   accessToken           String?
   refreshToken          String?
   idToken               String?
@@ -78,7 +84,7 @@ model Account {
 }
 
 model Verification {
-  id        String   @id
+  id        String   @id @default(uuid())
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
@@ -88,4 +94,18 @@ model Verification {
 
   @@index([identifier])
   @@map("verifications")
+}
+
+model Post {
+  id        String   @id @default(uuid())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  title   String
+  content String
+
+  userId String
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("posts")
 }
