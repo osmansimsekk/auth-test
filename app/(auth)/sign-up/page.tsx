@@ -16,6 +16,10 @@ import { Spinner } from "@/components/ui/spinner";
 import { signUpWithProfile } from "@/lib/actions/signup.action";
 import { useRouter } from "next/navigation";
 
+const errorMessages: Record<string, string> = {
+  "User already exists. Use another email.": "Bu e-posta adresi zaten kayıtlı.",
+};
+
 export const formSchema = z.object({
   name: z.string().min(2, { message: "Name is required." }),
   lastName: z.string().min(2, { message: "Surname is required." }),
@@ -50,17 +54,24 @@ const SignUp = () => {
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
     try {
-      await signUpWithProfile({ ...values });
-      toast.success("Başarıyla kayıt oldunuz!");
+      await signUpWithProfile(values);
+      toast.success("Hesabın başarıyla oluşturuldu.");
       router.replace("/");
-    } catch (error) {
-      toast.error("Bir hata meydana geldi!");
+    } catch (error: unknown) {
+      const err = error as { message?: string };
+
+      const backendMessage = err.message ?? "";
+
+      const toastMessage =
+        errorMessages[backendMessage] ?? "Bir hata oluştu. Lütfen tekrar dene.";
+
+      toast.error(toastMessage);
       console.error(error);
     }
   }
 
   return (
-    <div className="lg:w-1/2 w-screen flex items-center justify-center mx-auto lg:px-20 px-10 flex-col">
+    <div className="lg:w-1/2 w-screen flex items-center justify-center mx-auto lg:px-20 px-10 flex-col gap-10">
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)}>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-x-6">

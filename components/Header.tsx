@@ -41,6 +41,7 @@ const Header = ({
         onSuccess: () => {
           toast.success("Başarıyla çıkış yaptınız!");
           router.replace("/sign-in");
+          router.refresh();
         },
       },
     });

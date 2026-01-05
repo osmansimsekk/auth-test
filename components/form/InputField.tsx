@@ -33,7 +33,7 @@ const InputField = <T extends FieldValues>({
               {...field}
               placeholder={placeholder}
               type={type}
-              size={50}
+              size={45}
               className={cn(
                 error && "border-destructive focus-visible:ring-destructive",
                 "text-sm font-figtree"
@@ -41,7 +41,6 @@ const InputField = <T extends FieldValues>({
             />
           </FormControl>
 
-          {/* 🔥 Sabit alan */}
           <p className="form-error">{error ?? ""}</p>
         </FormItem>
       )}
