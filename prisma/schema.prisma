@@ -6,63 +6,69 @@ generator client {
 datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
- }
+}
 
-model Post {
-  id        String   @id @default(uuid())
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+enum Gender {
+  MALE
+  FEMALE
+  OTHER
+}
 
-  title String
-  content String
-
-  userId String
-  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
-
-  @@map("posts")
+enum Country {
+  TR
+  US
+  DE
+  FR
+  GB
 }
 
 model User {
-  id            String    @id
+  id            String    @id @default(uuid())
   createdAt     DateTime  @default(now())
   updatedAt     DateTime  @updatedAt
 
   name          String
+  lastName      String?
+
   email         String    @unique
   emailVerified Boolean   @default(false)
   image         String?
 
+  gender        Gender?
+  country       Country?
+
   sessions      Session[]
   accounts      Account[]
-  posts   Post[]
+  posts         Post[]
 
   @@map("users")
 }
 
 model Session {
-  id        String   @id
+  id        String   @id @default(uuid())
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
   expiresAt DateTime
-  token     String  @unique
+  token     String   @unique
   ipAddress String?
   userAgent String?
   userId    String
 
-  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@map("sessions")
 }
 
 model Account {
-  id                    String    @id
-  createdAt             DateTime  @default(now())
-  updatedAt             DateTime  @updatedAt
+  id                    String   @id @default(uuid())
+  createdAt             DateTime @default(now())
+  updatedAt             DateTime @updatedAt
 
   accountId             String
   providerId            String
   userId                String
+
   accessToken           String?
   refreshToken          String?
   idToken               String?
@@ -71,14 +77,14 @@ model Account {
   scope                 String?
   password              String?
 
-   user                  User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@index([userId])
   @@map("accounts")
 }
 
 model Verification {
-  id         String   @id
+  id         String   @id @default(uuid())
   createdAt  DateTime @default(now())
   updatedAt  DateTime @updatedAt
 
@@ -90,3 +96,16 @@ model Verification {
   @@map("verifications")
 }
 
+model Post {
+  id        String   @id @default(uuid())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  title   String
+  content String
+
+  userId String
+  user   User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("posts")
+}
