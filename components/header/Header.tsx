@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import Image from "next/image";
-import { Menu, X, User, UserPlus, LogOut } from "lucide-react";
+import { Menu, X, User, LogOut } from "lucide-react";
 
 import {
   NavigationMenu,
@@ -14,36 +14,34 @@ import {
 } from "@/components/ui/navigation-menu";
 
 import { Button } from "@/components/ui/button";
-import { navigationData } from "../public/data/contants";
+import { navigationData } from "../../public/data/contants";
 import { useIsMobile } from "@/hooks/useMobile";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
-import { auth } from "@/lib/auth";
 import { useState } from "react";
 
-import { DarkModeToggle } from "./DarkModeToggle";
+import { DarkModeToggle } from "@/components/header/DarkModeToggle";
 import { signOutAction } from "@/lib/actions/sign-email.action";
+import { useSession } from "@/lib/auth-client";
+import { GuestButtons } from "./GuestButtons";
 
-const Header = ({
-  session,
-}: {
-  session: Awaited<ReturnType<typeof auth.api.getSession>>;
-}) => {
+const Header = () => {
+  const { data: session, isPending } = useSession();
+
   const isMobile = useIsMobile();
   const [menuOpen, setMenuOpen] = useState(false);
-  const [isPending, setIsPending] = useState(false);
+  const [isLoggingOut, setLoggingOut] = useState(false);
 
   const router = useRouter();
 
   const handleSignOut = async () => {
-    setIsPending(true);
+    setLoggingOut(true);
     const { error } = await signOutAction();
     if (error) {
+      setLoggingOut(false);
       toast.error(error);
-      setIsPending(false);
     } else {
       router.replace("/sign-in");
-      router.refresh();
       toast.success("Başarıyla çıkış yaptınız.");
     }
   };
@@ -101,38 +99,23 @@ const Header = ({
         <div className="hidden lg:flex gap-4 items-center">
           <DarkModeToggle />
 
-          {!session ? (
-            <>
-              <Link href="/sign-in">
-                <Button variant="outline" className="gap-2">
-                  <User className="h-4 w-4" />
-                  Giriş Yap
-                </Button>
-              </Link>
-              <Link href="/sign-up">
-                <Button className="gap-2">
-                  <UserPlus className="h-4 w-4" />
-                  Üye Ol
-                </Button>
-              </Link>
-            </>
+          {isPending ? null : !session ? (
+            <GuestButtons variant="desktop" />
           ) : (
             <div className="flex gap-4 items-center">
               <Link href="/profile">
                 <Button>
                   <User />
-                  <p>Profil</p>
+                  <p>{session.user.name}</p>
                 </Button>
               </Link>
               <Button
-                disabled={isPending}
+                disabled={isLoggingOut}
                 variant="destructive"
-                onClick={async () => {
-                  await handleSignOut();
-                }}
+                onClick={handleSignOut}
               >
-                <span>Çıkış Yap</span>
                 <LogOut />
+                Çıkış Yap
               </Button>
             </div>
           )}
@@ -207,34 +190,21 @@ const Header = ({
             {/* Auth */}
             <div className="pt-6 border-t flex flex-col gap-3">
               {!session ? (
-                <>
-                  <Link href="/sign-in" onClick={() => setMenuOpen(false)}>
-                    <Button
-                      variant="outline"
-                      className="w-full h-11 text-sm gap-2"
-                    >
-                      <User className="h-4 w-4" />
-                      Giriş Yap
+                <GuestButtons
+                  variant="mobile"
+                  onClick={() => setMenuOpen(false)}
+                />
+              ) : (
+                <div className="flex flex-col gap-4">
+                  <Link href="/profile" onClick={() => setMenuOpen(false)}>
+                    <Button className="flex gap-2 w-full">
+                      <User />
+                      <p>{session.user.name}</p>
                     </Button>
                   </Link>
 
-                  <Link href="/sign-up" onClick={() => setMenuOpen(false)}>
-                    <Button className="w-full h-11 text-sm gap-2">
-                      <UserPlus className="h-4 w-4" />
-                      Üye Ol
-                    </Button>
-                  </Link>
-                </>
-              ) : (
-                <div className="flex flex-col gap-4">
-                  <Button onClick={() => setMenuOpen(false)}>
-                    <Link href="/profile" className="flex gap-2">
-                      <User />
-                      <p>Profile</p>
-                    </Link>
-                  </Button>
                   <Button
-                    disabled={isPending}
+                    disabled={isLoggingOut}
                     onClick={async () => {
                       await handleSignOut();
                       setMenuOpen(false);

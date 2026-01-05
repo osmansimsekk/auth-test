@@ -1,18 +1,13 @@
-import Header from "@/components/Header";
-import { auth } from "@/lib/auth";
-import { headers } from "next/headers";
+import Header from "@/components/header/Header";
 
 export default async function RootGroupLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
-  const session = await auth.api.getSession({
-    headers: await headers(),
-  });
   return (
     <>
-      <Header session={session} />
+      <Header />
       <main className="min-h-screen pt-20 overflow-visible">{children}</main>
     </>
   );

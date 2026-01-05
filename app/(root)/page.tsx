@@ -1,13 +1,16 @@
-import { Button } from "@/components/ui/button";
-import Link from "next/link";
-import React from "react";
+import Image from "next/image";
 
 const Home = () => {
   return (
     <div className="min-h-screen flex items-center justify-center">
-      <Link href="/sign-in">
-        <Button>Tıkla</Button>
-      </Link>
+      <div>
+        <Image
+          src="/images/hero.jpg"
+          alt="Hero Image"
+          fill
+          style={{ objectFit: "contain" }}
+        />
+      </div>
     </div>
   );
 };
