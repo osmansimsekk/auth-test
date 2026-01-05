@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { DM_Sans, Figtree } from "next/font/google";
 import "../globals.css";
 import { Toaster } from "@/components/ui/sonner";
+import { ThemeProvider } from "@/providers/ThemeProvider";
 
 const dmSans = DM_Sans({
   variable: "--font-dm-sans",
@@ -30,8 +31,10 @@ export default function RootLayout({
         ${figtree.variable}
       antialiased`}
       >
-        {children}
-        <Toaster position="top-center" />
+        <ThemeProvider>
+          {children}
+          <Toaster position="top-center" />
+        </ThemeProvider>
       </body>
     </html>
   );

@@ -7,13 +7,13 @@ const FormFooter = () => {
   const pathName = usePathname();
 
   return (
-    <div className="text-sm text-gray-500">
+    <div className="text-sm dark:text-gray-500 text-zinc-600">
       {pathName === "/sign-in" ? (
         <>
           <span>Hesabınız yok mu? </span>
           <Link
             href="/sign-up"
-            className="text-gray-300 border-b border-transparent hover:border-b-white cursor-pointer"
+            className="dark:text-gray-300 border-b border-transparent dark:hover:border-b-white hover:border-b-zinc-900 cursor-pointer text-zinc-800"
           >
             Kayıt olun.
           </Link>
@@ -22,8 +22,8 @@ const FormFooter = () => {
         <>
           <span>Zaten bir hesabınız var mı? </span>
           <Link
-            className="text-gray-300 border-b border-transparent hover:border-b-white cursor-pointer"
             href="/sign-in"
+            className="dark:text-gray-300 border-b border-transparent dark:hover:border-b-white hover:border-b-zinc-900 cursor-pointer text-zinc-800"
           >
             Giriş yapın.
           </Link>

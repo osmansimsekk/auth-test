@@ -90,7 +90,7 @@ const SignUp = () => {
                 control={form.control}
                 name="password"
                 type="password"
-                placeholder="Şifrenizi giriniz."
+                placeholder="Şifrenizi girin"
                 label="Şifre"
                 error={form.formState.errors.password?.message}
               />

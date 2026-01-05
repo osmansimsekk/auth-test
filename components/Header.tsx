@@ -1,6 +1,5 @@
 "use client";
 
-import * as React from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { Menu, X, User, UserPlus, LogOut } from "lucide-react";
@@ -21,6 +20,9 @@ import { signOut } from "@/lib/auth-client";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
 import { auth } from "@/lib/auth";
+import { useState } from "react";
+
+import { DarkModeToggle } from "./DarkModeToggle";
 
 const Header = ({
   session,
@@ -28,7 +30,7 @@ const Header = ({
   session: Awaited<ReturnType<typeof auth.api.getSession>>;
 }) => {
   const isMobile = useIsMobile();
-  const [menuOpen, setMenuOpen] = React.useState(false);
+  const [menuOpen, setMenuOpen] = useState(false);
 
   const router = useRouter();
 
@@ -52,7 +54,13 @@ const Header = ({
       <header className="fixed top-0 left-0 right-0 z-50 flex items-center border-b-[0.5px] px-6 lg:px-10 bg-background py-2">
         {/* Logo */}
         <Link href="/" className="z-50">
-          <Image src="/images/logo.png" alt="Logo" width={90} height={90} />
+          <Image
+            src="/images/logo.png"
+            alt="Logo"
+            width={90}
+            height={90}
+            className="invert dark:invert-0"
+          />
         </Link>
 
         {/* Desktop Navigation */}
@@ -61,7 +69,7 @@ const Header = ({
             <NavigationMenuList>
               {navigationData.map((category) => (
                 <NavigationMenuItem key={category.trigger}>
-                  <NavigationMenuTrigger className="text-white">
+                  <NavigationMenuTrigger>
                     {category.trigger}
                   </NavigationMenuTrigger>
 
@@ -91,7 +99,9 @@ const Header = ({
         </div>
 
         {/* Desktop Auth */}
-        <div className="hidden lg:flex gap-4">
+        <div className="hidden lg:flex gap-4 items-center">
+          <DarkModeToggle />
+
           {!session ? (
             <>
               <Link href="/sign-in">
@@ -154,6 +164,7 @@ const Header = ({
   `}
       >
         {/* Close */}
+
         <Button
           variant="default"
           onClick={() => setMenuOpen(false)}
@@ -161,6 +172,7 @@ const Header = ({
         >
           <X className="w-5 h-5" />
         </Button>
+        <DarkModeToggle className="absolute top-15 right-5" />
 
         {/* Menu Content */}
         <nav
@@ -214,15 +226,23 @@ const Header = ({
                   </Link>
                 </>
               ) : (
-                <Button
-                  onClick={async () => {
-                    await handleSignOut();
-                    setMenuOpen(false);
-                  }}
-                >
-                  <LogOut />
-                  Çıkış Yap
-                </Button>
+                <div className="flex flex-col gap-4">
+                  <Button onClick={() => setMenuOpen(false)}>
+                    <Link href="/profile" className="flex gap-2">
+                      <User />
+                      <p>Profile</p>
+                    </Link>
+                  </Button>
+                  <Button
+                    onClick={async () => {
+                      await handleSignOut();
+                      setMenuOpen(false);
+                    }}
+                  >
+                    <LogOut />
+                    Çıkış Yap
+                  </Button>
+                </div>
               )}
             </div>
           </div>
