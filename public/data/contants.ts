@@ -87,11 +87,3 @@ export const navigationData: NavCategory[] = [
     ],
   },
 ];
-
-export const countries = [
-  { label: "Türkiye", value: "TR" },
-  { label: "Amerika Birleşik Devletleri", value: "US" },
-  { label: "Almanya", value: "DE" },
-  { label: "Fransa", value: "FR" },
-  { label: "Birleşik Krallık", value: "GB" },
-];

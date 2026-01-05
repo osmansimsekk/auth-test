@@ -20,17 +20,13 @@ import {
 } from "@/components/ui/command";
 import { Check, ChevronsUpDown } from "lucide-react";
 import { cn } from "@/lib/utils";
-
-type Option = {
-  label: string;
-  value: string;
-};
+import { CountryOption } from "@/types";
 
 type CountrySelectFieldProps<T extends FieldValues> = {
   control: Control<T>;
   name: Path<T>;
   label: string;
-  options: Option[];
+  options: CountryOption[];
   placeholder?: string;
   error?: string;
 };
@@ -40,7 +36,7 @@ const CountrySelectField = <T extends FieldValues>({
   name,
   label,
   options,
-  placeholder = "Select country",
+  placeholder = "Ülke seçiniz",
   error,
 }: CountrySelectFieldProps<T>) => {
   return (
@@ -68,27 +64,36 @@ const CountrySelectField = <T extends FieldValues>({
                         "border-destructive focus-visible:ring-destructive"
                     )}
                   >
-                    {selected ? selected.label : placeholder}
+                    {selected ? (
+                      <span className="flex items-center gap-2">
+                        <span className="text-lg">{selected.flag}</span>
+                        <span>{selected.label}</span>
+                      </span>
+                    ) : (
+                      <span>{placeholder}</span>
+                    )}
+
                     <ChevronsUpDown className="ml-2 h-4 w-4 opacity-50" />
                   </Button>
                 </FormControl>
               </PopoverTrigger>
 
-              <PopoverContent className="p-0 w-62.5">
+              <PopoverContent className="p-0 w-64">
                 <Command>
                   <CommandInput
-                    placeholder="Ülkenizi Seçiniz..."
-                    className="font-fightree"
+                    placeholder="Ülke ara..."
+                    className="font-figtree"
                   />
-                  <CommandEmpty>No country found.</CommandEmpty>
 
-                  <CommandGroup>
+                  <CommandEmpty>Ülke bulunamadı.</CommandEmpty>
+
+                  <CommandGroup className="max-h-64 overflow-auto">
                     {options.map((opt) => (
                       <CommandItem
                         key={opt.value}
                         value={opt.label}
                         onSelect={() => field.onChange(opt.value)}
-                        className="font-figtree"
+                        className="flex items-center gap-2"
                       >
                         <Check
                           className={cn(
@@ -98,7 +103,9 @@ const CountrySelectField = <T extends FieldValues>({
                               : "opacity-0"
                           )}
                         />
-                        {opt.label}
+
+                        <span className="text-lg">{opt.flag}</span>
+                        <span>{opt.label}</span>
                       </CommandItem>
                     ))}
                   </CommandGroup>

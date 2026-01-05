@@ -2,21 +2,11 @@
 
 import { auth } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
-import { z } from "zod";
-
-const SignUpSchema = z.object({
-  name: z.string().min(2),
-  lastName: z.string().min(2),
-  email: z.string().email(),
-  password: z.string().min(8),
-  gender: z.enum(["MALE", "FEMALE"]),
-  country: z.enum(["TR", "US", "DE", "FR", "GB"]),
-});
-
-type SignUpInput = z.infer<typeof SignUpSchema>;
+import { signUpFormSchema } from "../form-schemas";
+import { SignUpInput } from "@/types";
 
 export async function signUpWithProfile(input: SignUpInput) {
-  const data = SignUpSchema.parse(input);
+  const data = signUpFormSchema.parse(input);
   const result = await auth.api.signUpEmail({
     body: {
       name: data.name,

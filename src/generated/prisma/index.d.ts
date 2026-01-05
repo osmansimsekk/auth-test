@@ -51,26 +51,11 @@ export namespace $Enums {
 
 export type Gender = (typeof Gender)[keyof typeof Gender]
 
-
-export const Country: {
-  TR: 'TR',
-  US: 'US',
-  DE: 'DE',
-  FR: 'FR',
-  GB: 'GB'
-};
-
-export type Country = (typeof Country)[keyof typeof Country]
-
 }
 
 export type Gender = $Enums.Gender
 
 export const Gender: typeof $Enums.Gender
-
-export type Country = $Enums.Country
-
-export const Country: typeof $Enums.Country
 
 /**
  * ##  Prisma Client ʲˢ
@@ -1326,7 +1311,7 @@ export namespace Prisma {
     emailVerified: boolean | null
     image: string | null
     gender: $Enums.Gender | null
-    country: $Enums.Country | null
+    country: string | null
   }
 
   export type UserMaxAggregateOutputType = {
@@ -1339,7 +1324,7 @@ export namespace Prisma {
     emailVerified: boolean | null
     image: string | null
     gender: $Enums.Gender | null
-    country: $Enums.Country | null
+    country: string | null
   }
 
   export type UserCountAggregateOutputType = {
@@ -1479,7 +1464,7 @@ export namespace Prisma {
     emailVerified: boolean
     image: string | null
     gender: $Enums.Gender | null
-    country: $Enums.Country | null
+    country: string | null
     _count: UserCountAggregateOutputType | null
     _min: UserMinAggregateOutputType | null
     _max: UserMaxAggregateOutputType | null
@@ -1582,7 +1567,7 @@ export namespace Prisma {
       emailVerified: boolean
       image: string | null
       gender: $Enums.Gender | null
-      country: $Enums.Country | null
+      country: string | null
     }, ExtArgs["result"]["user"]>
     composites: {}
   }
@@ -2018,7 +2003,7 @@ export namespace Prisma {
     readonly emailVerified: FieldRef<"User", 'Boolean'>
     readonly image: FieldRef<"User", 'String'>
     readonly gender: FieldRef<"User", 'Gender'>
-    readonly country: FieldRef<"User", 'Country'>
+    readonly country: FieldRef<"User", 'String'>
   }
     
 
@@ -7001,20 +6986,6 @@ export namespace Prisma {
 
 
   /**
-   * Reference to a field of type 'Country'
-   */
-  export type EnumCountryFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Country'>
-    
-
-
-  /**
-   * Reference to a field of type 'Country[]'
-   */
-  export type ListEnumCountryFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Country[]'>
-    
-
-
-  /**
    * Reference to a field of type 'Int'
    */
   export type IntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Int'>
@@ -7044,7 +7015,7 @@ export namespace Prisma {
     emailVerified?: BoolFilter<"User"> | boolean
     image?: StringNullableFilter<"User"> | string | null
     gender?: EnumGenderNullableFilter<"User"> | $Enums.Gender | null
-    country?: EnumCountryNullableFilter<"User"> | $Enums.Country | null
+    country?: StringNullableFilter<"User"> | string | null
     sessions?: SessionListRelationFilter
     accounts?: AccountListRelationFilter
     posts?: PostListRelationFilter
@@ -7079,7 +7050,7 @@ export namespace Prisma {
     emailVerified?: BoolFilter<"User"> | boolean
     image?: StringNullableFilter<"User"> | string | null
     gender?: EnumGenderNullableFilter<"User"> | $Enums.Gender | null
-    country?: EnumCountryNullableFilter<"User"> | $Enums.Country | null
+    country?: StringNullableFilter<"User"> | string | null
     sessions?: SessionListRelationFilter
     accounts?: AccountListRelationFilter
     posts?: PostListRelationFilter
@@ -7114,7 +7085,7 @@ export namespace Prisma {
     emailVerified?: BoolWithAggregatesFilter<"User"> | boolean
     image?: StringNullableWithAggregatesFilter<"User"> | string | null
     gender?: EnumGenderNullableWithAggregatesFilter<"User"> | $Enums.Gender | null
-    country?: EnumCountryNullableWithAggregatesFilter<"User"> | $Enums.Country | null
+    country?: StringNullableWithAggregatesFilter<"User"> | string | null
   }
 
   export type SessionWhereInput = {
@@ -7409,7 +7380,7 @@ export namespace Prisma {
     emailVerified?: boolean
     image?: string | null
     gender?: $Enums.Gender | null
-    country?: $Enums.Country | null
+    country?: string | null
     sessions?: SessionCreateNestedManyWithoutUserInput
     accounts?: AccountCreateNestedManyWithoutUserInput
     posts?: PostCreateNestedManyWithoutUserInput
@@ -7425,7 +7396,7 @@ export namespace Prisma {
     emailVerified?: boolean
     image?: string | null
     gender?: $Enums.Gender | null
-    country?: $Enums.Country | null
+    country?: string | null
     sessions?: SessionUncheckedCreateNestedManyWithoutUserInput
     accounts?: AccountUncheckedCreateNestedManyWithoutUserInput
     posts?: PostUncheckedCreateNestedManyWithoutUserInput
@@ -7441,7 +7412,7 @@ export namespace Prisma {
     emailVerified?: BoolFieldUpdateOperationsInput | boolean
     image?: NullableStringFieldUpdateOperationsInput | string | null
     gender?: NullableEnumGenderFieldUpdateOperationsInput | $Enums.Gender | null
-    country?: NullableEnumCountryFieldUpdateOperationsInput | $Enums.Country | null
+    country?: NullableStringFieldUpdateOperationsInput | string | null
     sessions?: SessionUpdateManyWithoutUserNestedInput
     accounts?: AccountUpdateManyWithoutUserNestedInput
     posts?: PostUpdateManyWithoutUserNestedInput
@@ -7457,7 +7428,7 @@ export namespace Prisma {
     emailVerified?: BoolFieldUpdateOperationsInput | boolean
     image?: NullableStringFieldUpdateOperationsInput | string | null
     gender?: NullableEnumGenderFieldUpdateOperationsInput | $Enums.Gender | null
-    country?: NullableEnumCountryFieldUpdateOperationsInput | $Enums.Country | null
+    country?: NullableStringFieldUpdateOperationsInput | string | null
     sessions?: SessionUncheckedUpdateManyWithoutUserNestedInput
     accounts?: AccountUncheckedUpdateManyWithoutUserNestedInput
     posts?: PostUncheckedUpdateManyWithoutUserNestedInput
@@ -7473,7 +7444,7 @@ export namespace Prisma {
     emailVerified?: boolean
     image?: string | null
     gender?: $Enums.Gender | null
-    country?: $Enums.Country | null
+    country?: string | null
   }
 
   export type UserUpdateManyMutationInput = {
@@ -7486,7 +7457,7 @@ export namespace Prisma {
     emailVerified?: BoolFieldUpdateOperationsInput | boolean
     image?: NullableStringFieldUpdateOperationsInput | string | null
     gender?: NullableEnumGenderFieldUpdateOperationsInput | $Enums.Gender | null
-    country?: NullableEnumCountryFieldUpdateOperationsInput | $Enums.Country | null
+    country?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type UserUncheckedUpdateManyInput = {
@@ -7499,7 +7470,7 @@ export namespace Prisma {
     emailVerified?: BoolFieldUpdateOperationsInput | boolean
     image?: NullableStringFieldUpdateOperationsInput | string | null
     gender?: NullableEnumGenderFieldUpdateOperationsInput | $Enums.Gender | null
-    country?: NullableEnumCountryFieldUpdateOperationsInput | $Enums.Country | null
+    country?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type SessionCreateInput = {
@@ -7867,13 +7838,6 @@ export namespace Prisma {
     not?: NestedEnumGenderNullableFilter<$PrismaModel> | $Enums.Gender | null
   }
 
-  export type EnumCountryNullableFilter<$PrismaModel = never> = {
-    equals?: $Enums.Country | EnumCountryFieldRefInput<$PrismaModel> | null
-    in?: $Enums.Country[] | ListEnumCountryFieldRefInput<$PrismaModel> | null
-    notIn?: $Enums.Country[] | ListEnumCountryFieldRefInput<$PrismaModel> | null
-    not?: NestedEnumCountryNullableFilter<$PrismaModel> | $Enums.Country | null
-  }
-
   export type SessionListRelationFilter = {
     every?: SessionWhereInput
     some?: SessionWhereInput
@@ -8014,16 +7978,6 @@ export namespace Prisma {
     _count?: NestedIntNullableFilter<$PrismaModel>
     _min?: NestedEnumGenderNullableFilter<$PrismaModel>
     _max?: NestedEnumGenderNullableFilter<$PrismaModel>
-  }
-
-  export type EnumCountryNullableWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: $Enums.Country | EnumCountryFieldRefInput<$PrismaModel> | null
-    in?: $Enums.Country[] | ListEnumCountryFieldRefInput<$PrismaModel> | null
-    notIn?: $Enums.Country[] | ListEnumCountryFieldRefInput<$PrismaModel> | null
-    not?: NestedEnumCountryNullableWithAggregatesFilter<$PrismaModel> | $Enums.Country | null
-    _count?: NestedIntNullableFilter<$PrismaModel>
-    _min?: NestedEnumCountryNullableFilter<$PrismaModel>
-    _max?: NestedEnumCountryNullableFilter<$PrismaModel>
   }
 
   export type UserScalarRelationFilter = {
@@ -8253,10 +8207,6 @@ export namespace Prisma {
     set?: $Enums.Gender | null
   }
 
-  export type NullableEnumCountryFieldUpdateOperationsInput = {
-    set?: $Enums.Country | null
-  }
-
   export type SessionUpdateManyWithoutUserNestedInput = {
     create?: XOR<SessionCreateWithoutUserInput, SessionUncheckedCreateWithoutUserInput> | SessionCreateWithoutUserInput[] | SessionUncheckedCreateWithoutUserInput[]
     connectOrCreate?: SessionCreateOrConnectWithoutUserInput | SessionCreateOrConnectWithoutUserInput[]
@@ -8438,13 +8388,6 @@ export namespace Prisma {
     not?: NestedEnumGenderNullableFilter<$PrismaModel> | $Enums.Gender | null
   }
 
-  export type NestedEnumCountryNullableFilter<$PrismaModel = never> = {
-    equals?: $Enums.Country | EnumCountryFieldRefInput<$PrismaModel> | null
-    in?: $Enums.Country[] | ListEnumCountryFieldRefInput<$PrismaModel> | null
-    notIn?: $Enums.Country[] | ListEnumCountryFieldRefInput<$PrismaModel> | null
-    not?: NestedEnumCountryNullableFilter<$PrismaModel> | $Enums.Country | null
-  }
-
   export type NestedStringWithAggregatesFilter<$PrismaModel = never> = {
     equals?: string | StringFieldRefInput<$PrismaModel>
     in?: string[] | ListStringFieldRefInput<$PrismaModel>
@@ -8531,16 +8474,6 @@ export namespace Prisma {
     _count?: NestedIntNullableFilter<$PrismaModel>
     _min?: NestedEnumGenderNullableFilter<$PrismaModel>
     _max?: NestedEnumGenderNullableFilter<$PrismaModel>
-  }
-
-  export type NestedEnumCountryNullableWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: $Enums.Country | EnumCountryFieldRefInput<$PrismaModel> | null
-    in?: $Enums.Country[] | ListEnumCountryFieldRefInput<$PrismaModel> | null
-    notIn?: $Enums.Country[] | ListEnumCountryFieldRefInput<$PrismaModel> | null
-    not?: NestedEnumCountryNullableWithAggregatesFilter<$PrismaModel> | $Enums.Country | null
-    _count?: NestedIntNullableFilter<$PrismaModel>
-    _min?: NestedEnumCountryNullableFilter<$PrismaModel>
-    _max?: NestedEnumCountryNullableFilter<$PrismaModel>
   }
 
   export type NestedDateTimeNullableFilter<$PrismaModel = never> = {
@@ -8767,7 +8700,7 @@ export namespace Prisma {
     emailVerified?: boolean
     image?: string | null
     gender?: $Enums.Gender | null
-    country?: $Enums.Country | null
+    country?: string | null
     accounts?: AccountCreateNestedManyWithoutUserInput
     posts?: PostCreateNestedManyWithoutUserInput
   }
@@ -8782,7 +8715,7 @@ export namespace Prisma {
     emailVerified?: boolean
     image?: string | null
     gender?: $Enums.Gender | null
-    country?: $Enums.Country | null
+    country?: string | null
     accounts?: AccountUncheckedCreateNestedManyWithoutUserInput
     posts?: PostUncheckedCreateNestedManyWithoutUserInput
   }
@@ -8813,7 +8746,7 @@ export namespace Prisma {
     emailVerified?: BoolFieldUpdateOperationsInput | boolean
     image?: NullableStringFieldUpdateOperationsInput | string | null
     gender?: NullableEnumGenderFieldUpdateOperationsInput | $Enums.Gender | null
-    country?: NullableEnumCountryFieldUpdateOperationsInput | $Enums.Country | null
+    country?: NullableStringFieldUpdateOperationsInput | string | null
     accounts?: AccountUpdateManyWithoutUserNestedInput
     posts?: PostUpdateManyWithoutUserNestedInput
   }
@@ -8828,7 +8761,7 @@ export namespace Prisma {
     emailVerified?: BoolFieldUpdateOperationsInput | boolean
     image?: NullableStringFieldUpdateOperationsInput | string | null
     gender?: NullableEnumGenderFieldUpdateOperationsInput | $Enums.Gender | null
-    country?: NullableEnumCountryFieldUpdateOperationsInput | $Enums.Country | null
+    country?: NullableStringFieldUpdateOperationsInput | string | null
     accounts?: AccountUncheckedUpdateManyWithoutUserNestedInput
     posts?: PostUncheckedUpdateManyWithoutUserNestedInput
   }
@@ -8843,7 +8776,7 @@ export namespace Prisma {
     emailVerified?: boolean
     image?: string | null
     gender?: $Enums.Gender | null
-    country?: $Enums.Country | null
+    country?: string | null
     sessions?: SessionCreateNestedManyWithoutUserInput
     posts?: PostCreateNestedManyWithoutUserInput
   }
@@ -8858,7 +8791,7 @@ export namespace Prisma {
     emailVerified?: boolean
     image?: string | null
     gender?: $Enums.Gender | null
-    country?: $Enums.Country | null
+    country?: string | null
     sessions?: SessionUncheckedCreateNestedManyWithoutUserInput
     posts?: PostUncheckedCreateNestedManyWithoutUserInput
   }
@@ -8889,7 +8822,7 @@ export namespace Prisma {
     emailVerified?: BoolFieldUpdateOperationsInput | boolean
     image?: NullableStringFieldUpdateOperationsInput | string | null
     gender?: NullableEnumGenderFieldUpdateOperationsInput | $Enums.Gender | null
-    country?: NullableEnumCountryFieldUpdateOperationsInput | $Enums.Country | null
+    country?: NullableStringFieldUpdateOperationsInput | string | null
     sessions?: SessionUpdateManyWithoutUserNestedInput
     posts?: PostUpdateManyWithoutUserNestedInput
   }
@@ -8904,7 +8837,7 @@ export namespace Prisma {
     emailVerified?: BoolFieldUpdateOperationsInput | boolean
     image?: NullableStringFieldUpdateOperationsInput | string | null
     gender?: NullableEnumGenderFieldUpdateOperationsInput | $Enums.Gender | null
-    country?: NullableEnumCountryFieldUpdateOperationsInput | $Enums.Country | null
+    country?: NullableStringFieldUpdateOperationsInput | string | null
     sessions?: SessionUncheckedUpdateManyWithoutUserNestedInput
     posts?: PostUncheckedUpdateManyWithoutUserNestedInput
   }
@@ -8919,7 +8852,7 @@ export namespace Prisma {
     emailVerified?: boolean
     image?: string | null
     gender?: $Enums.Gender | null
-    country?: $Enums.Country | null
+    country?: string | null
     sessions?: SessionCreateNestedManyWithoutUserInput
     accounts?: AccountCreateNestedManyWithoutUserInput
   }
@@ -8934,7 +8867,7 @@ export namespace Prisma {
     emailVerified?: boolean
     image?: string | null
     gender?: $Enums.Gender | null
-    country?: $Enums.Country | null
+    country?: string | null
     sessions?: SessionUncheckedCreateNestedManyWithoutUserInput
     accounts?: AccountUncheckedCreateNestedManyWithoutUserInput
   }
@@ -8965,7 +8898,7 @@ export namespace Prisma {
     emailVerified?: BoolFieldUpdateOperationsInput | boolean
     image?: NullableStringFieldUpdateOperationsInput | string | null
     gender?: NullableEnumGenderFieldUpdateOperationsInput | $Enums.Gender | null
-    country?: NullableEnumCountryFieldUpdateOperationsInput | $Enums.Country | null
+    country?: NullableStringFieldUpdateOperationsInput | string | null
     sessions?: SessionUpdateManyWithoutUserNestedInput
     accounts?: AccountUpdateManyWithoutUserNestedInput
   }
@@ -8980,7 +8913,7 @@ export namespace Prisma {
     emailVerified?: BoolFieldUpdateOperationsInput | boolean
     image?: NullableStringFieldUpdateOperationsInput | string | null
     gender?: NullableEnumGenderFieldUpdateOperationsInput | $Enums.Gender | null
-    country?: NullableEnumCountryFieldUpdateOperationsInput | $Enums.Country | null
+    country?: NullableStringFieldUpdateOperationsInput | string | null
     sessions?: SessionUncheckedUpdateManyWithoutUserNestedInput
     accounts?: AccountUncheckedUpdateManyWithoutUserNestedInput
   }

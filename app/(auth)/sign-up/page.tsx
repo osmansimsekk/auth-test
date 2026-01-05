@@ -2,44 +2,28 @@
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
-import { z } from "zod";
-
 import { Button } from "@/components/ui/button";
 import { Form } from "@/components/ui/form";
 import InputField from "@/components/form/InputField";
 import FormFooter from "@/components/form/FormFooter";
 import SelectField from "@/components/form/SelectField";
 import CountrySelectField from "@/components/form/CountrySelectField";
-import { countries } from "@/public/data/contants";
 import { toast } from "sonner";
 import { Spinner } from "@/components/ui/spinner";
 import { signUpWithProfile } from "@/lib/actions/signup.action";
 import { useRouter } from "next/navigation";
+import { signUpFormSchema as formSchema } from "@/lib/form-schemas";
+import { SignInInput, SignUpInput } from "@/types";
+import { countryOptions } from "@/lib/countries";
 
 const errorMessages: Record<string, string> = {
   "User already exists. Use another email.": "Bu e-posta adresi zaten kayıtlı.",
 };
 
-export const formSchema = z.object({
-  name: z.string().min(2, { message: "Name is required." }),
-  lastName: z.string().min(2, { message: "Surname is required." }),
-  gender: z.enum(["MALE", "FEMALE"]),
-  email: z
-    .string()
-    .min(1, { message: "Email zorunludur." })
-    .email({ message: "Invalid email address." }),
-  country: z.enum(["TR", "US", "DE", "FR", "GB"], {
-    message: "County required.",
-  }),
-  password: z.string().min(8, {
-    message: "Password must be at least 8 characters.",
-  }),
-});
-
 const SignUp = () => {
   const router = useRouter();
 
-  const form = useForm<z.infer<typeof formSchema>>({
+  const form = useForm<SignUpInput>({
     resolver: zodResolver(formSchema),
     defaultValues: {
       name: "",
@@ -52,7 +36,7 @@ const SignUp = () => {
     mode: "onBlur",
   });
 
-  async function onSubmit(values: z.infer<typeof formSchema>) {
+  async function onSubmit(values: SignInInput) {
     try {
       await signUpWithProfile(values);
       toast.success("Hesabın başarıyla oluşturuldu.");
@@ -117,7 +101,7 @@ const SignUp = () => {
                   label="Ülke"
                   control={form.control}
                   error={form.formState.errors.country?.message}
-                  options={countries}
+                  options={countryOptions}
                 />
 
                 <SelectField

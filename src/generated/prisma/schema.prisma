@@ -14,14 +14,6 @@ enum Gender {
   OTHER
 }
 
-enum Country {
-  TR
-  US
-  DE
-  FR
-  GB
-}
-
 model User {
   id        String   @id @default(uuid())
   createdAt DateTime @default(now())
@@ -35,7 +27,7 @@ model User {
   image         String?
 
   gender  Gender?
-  country Country?
+  country String? @db.Char(2)
 
   sessions Session[]
   accounts Account[]

@@ -199,14 +199,6 @@ exports.Gender = exports.$Enums.Gender = {
   OTHER: 'OTHER'
 };
 
-exports.Country = exports.$Enums.Country = {
-  TR: 'TR',
-  US: 'US',
-  DE: 'DE',
-  FR: 'FR',
-  GB: 'GB'
-};
-
 exports.Prisma.ModelName = {
   User: 'User',
   Session: 'Session',

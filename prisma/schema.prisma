@@ -14,13 +14,6 @@ enum Gender {
   OTHER
 }
 
-enum Country {
-  TR
-  US
-  DE
-  FR
-  GB
-}
 
 model User {
   id            String    @id @default(uuid())
@@ -35,7 +28,7 @@ model User {
   image         String?
 
   gender        Gender?
-  country       Country?
+  country       String?   @db.Char(2)
 
   sessions      Session[]
   accounts      Account[]
@@ -43,6 +36,7 @@ model User {
 
   @@map("users")
 }
+
 
 model Session {
   id        String   @id @default(uuid())
