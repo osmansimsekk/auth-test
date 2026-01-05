@@ -16,13 +16,13 @@ import {
 import { Button } from "@/components/ui/button";
 import { navigationData } from "../public/data/contants";
 import { useIsMobile } from "@/hooks/useMobile";
-import { signOut } from "@/lib/auth-client";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
 import { auth } from "@/lib/auth";
 import { useState } from "react";
 
 import { DarkModeToggle } from "./DarkModeToggle";
+import { signOutAction } from "@/lib/actions/sign-email.action";
 
 const Header = ({
   session,
@@ -36,24 +36,16 @@ const Header = ({
   const router = useRouter();
 
   const handleSignOut = async () => {
-    await signOut({
-      fetchOptions: {
-        onError: (ctx) => {
-          toast.error(ctx.error.message);
-        },
-        onSuccess: () => {
-          toast.success("Başarıyla çıkış yaptınız!");
-          router.replace("/sign-in");
-          router.refresh();
-        },
-        onRequest: () => {
-          setIsPending(true);
-        },
-        onResponse: () => {
-          setIsPending(false);
-        },
-      },
-    });
+    setIsPending(true);
+    const { error } = await signOutAction();
+    if (error) {
+      toast.error(error);
+      setIsPending(false);
+    } else {
+      router.replace("/sign-in");
+      router.refresh();
+      toast.success("Başarıyla çıkış yaptınız.");
+    }
   };
 
   return (
