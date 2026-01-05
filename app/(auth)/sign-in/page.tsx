@@ -9,7 +9,7 @@ import FormFooter from "@/components/form/FormFooter";
 
 import { useRouter } from "next/navigation";
 import { Spinner } from "@/components/ui/spinner";
-import { signInFormSchema as formSchema } from "@/lib/form-schemas";
+import { signInFormSchema as formSchema } from "@/lib/formSchemas";
 import { SignInInput } from "@/types";
 import { signInEmailAction } from "@/lib/actions/sign-email.action";
 import { toast } from "sonner";
@@ -59,31 +59,7 @@ const SignIn = () => {
           />
 
           <div className="flex flex-col gap-4 mt-5">
-            <Button
-              type="submit"
-              disabled={form.formState.isSubmitting}
-              // onSubmit={form.handleSubmit(async (values) => {
-              //   toast.promise(
-              //     signIn.email(values, {
-              //       onError: (ctx) => {
-              //         throw new Error(ctx.error.message);
-              //       },
-              //       onSuccess: () => {
-              //         router.replace("/");
-              //         router.refresh();
-              //       },
-              //     }),
-              //     {
-              //       loading: "Giriş Yapılıyor...",
-              //       success: "Başarıyla Giriş Yaptınız.",
-              //       error: (err) =>
-              //         `${
-              //           err instanceof Error ? err.message : "Bir hata oluştu"
-              //         }`,
-              //     }
-              //   );
-              // })}
-            >
+            <Button type="submit" disabled={form.formState.isSubmitting}>
               {form.formState.isSubmitting ? (
                 <div className="flex gap-1 items-center">
                   <Spinner />

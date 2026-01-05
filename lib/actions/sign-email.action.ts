@@ -1,10 +1,12 @@
 "use server";
 
-import { auth } from "@/lib/auth";
+import { auth, ErrorCode } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
-import { signInFormSchema, signUpFormSchema } from "../form-schemas";
+import { signInFormSchema, signUpFormSchema } from "../formSchemas";
 import { SignUpInput } from "@/types";
 import { headers } from "next/headers";
+import { APIError } from "better-auth/api";
+import { getAuthErrorMessage } from "../utils";
 
 export async function signUpEmailAction(input: SignUpInput) {
   const data = signUpFormSchema.parse(input);
@@ -29,8 +31,15 @@ export async function signUpEmailAction(input: SignUpInput) {
     });
 
     return { error: null };
-  } catch {
-    return { error: "Bir şeyler ters gitti." };
+  } catch (err) {
+    if (err instanceof APIError) {
+      const errCode = err.body ? (err.body.code as ErrorCode) : "UNKNOWN";
+
+      const error = getAuthErrorMessage(errCode, err);
+      return error;
+    }
+
+    return { error: "Bir şeyler ters gitti!" };
   }
 }
 
@@ -45,8 +54,13 @@ export async function signInEmailAction(formData: FormData) {
       },
     });
     return { error: null };
-  } catch {
-    return { error: "Bir şeyler ters gitti!" };
+  } catch (err) {
+    if (err instanceof APIError) {
+      const errCode = err.body ? (err.body.code as ErrorCode) : "UNKNOWN";
+
+      const error = getAuthErrorMessage(errCode, err);
+      return error;
+    }
   }
 }
 
@@ -55,7 +69,12 @@ export async function signOutAction() {
     const header = await headers();
     await auth.api.signOut({ headers: header });
     return { error: null };
-  } catch {
-    return { error: "Çıkış yapılırken bir hata oldu." };
+  } catch (err) {
+    if (err instanceof APIError) {
+      const errCode = err.body ? (err.body.code as ErrorCode) : "UNKNOWN";
+
+      const error = getAuthErrorMessage(errCode, err);
+      return error;
+    }
   }
 }

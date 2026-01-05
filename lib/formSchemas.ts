@@ -2,8 +2,18 @@ import z from "zod";
 import { COUNTRY_CODES } from "./countries";
 
 export const signUpFormSchema = z.object({
-  name: z.string().min(2, { message: "Ad zorunludur." }),
-  lastName: z.string().min(2, { message: "Soyad zorunludur." }),
+  name: z
+    .string()
+    .min(2, { message: "Ad en az 2 karakter olmalıdır." })
+    .regex(/^[A-Za-zÇĞİÖŞÜçğıöşü\s-]+$/, {
+      message: "Ad sadece harflerden oluşmalıdır.",
+    }),
+  lastName: z
+    .string()
+    .min(2, { message: "Soyad en az 2 karakter olmalıdır." })
+    .regex(/^[A-Za-zÇĞİÖŞÜçğıöşü\s-]+$/, {
+      message: "Soyad sadece harflerden oluşmalıdır.",
+    }),
   gender: z.enum(["MALE", "FEMALE"], {
     message: "Cinsiyet seçimi zorunludur.",
   }),
