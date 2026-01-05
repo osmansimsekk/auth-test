@@ -14,6 +14,11 @@ enum Gender {
   OTHER
 }
 
+enum UserRole{
+  ADMIN
+  USER
+}
+
 
 model User {
   id            String    @id @default(uuid())
@@ -21,14 +26,19 @@ model User {
   updatedAt     DateTime  @updatedAt
 
   name          String
-  lastName      String?
+  lastName      String
 
   email         String    @unique
   emailVerified Boolean   @default(false)
   image         String?
 
-  gender        Gender?
-  country       String?   @db.Char(2)
+  gender        Gender? @default(MALE)
+  country       String?   @db.Char(2) @default("TR")
+  role UserRole @default(USER)
+  banned        Boolean?  @default(false)
+  banReason     String?
+  banExpires    DateTime?
+
 
   sessions      Session[]
   accounts      Account[]
@@ -48,6 +58,8 @@ model Session {
   ipAddress String?
   userAgent String?
   userId    String
+  impersonatedBy String?
+
 
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 

@@ -131,7 +131,11 @@ exports.Prisma.UserScalarFieldEnum = {
   emailVerified: 'emailVerified',
   image: 'image',
   gender: 'gender',
-  country: 'country'
+  country: 'country',
+  role: 'role',
+  banned: 'banned',
+  banReason: 'banReason',
+  banExpires: 'banExpires'
 };
 
 exports.Prisma.SessionScalarFieldEnum = {
@@ -142,7 +146,8 @@ exports.Prisma.SessionScalarFieldEnum = {
   token: 'token',
   ipAddress: 'ipAddress',
   userAgent: 'userAgent',
-  userId: 'userId'
+  userId: 'userId',
+  impersonatedBy: 'impersonatedBy'
 };
 
 exports.Prisma.AccountScalarFieldEnum = {
@@ -197,6 +202,11 @@ exports.Gender = exports.$Enums.Gender = {
   MALE: 'MALE',
   FEMALE: 'FEMALE',
   OTHER: 'OTHER'
+};
+
+exports.UserRole = exports.$Enums.UserRole = {
+  ADMIN: 'ADMIN',
+  USER: 'USER'
 };
 
 exports.Prisma.ModelName = {

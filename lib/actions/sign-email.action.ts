@@ -1,9 +1,9 @@
 "use server";
 
 import { auth, ErrorCode } from "@/lib/auth";
-import { prisma } from "@/lib/prisma";
+
 import { signInFormSchema, signUpFormSchema } from "../formSchemas";
-import { SignUpInput } from "@/types";
+import { SignInInput, SignUpInput } from "@/types";
 import { headers } from "next/headers";
 import { APIError } from "better-auth/api";
 import { getAuthErrorMessage } from "../utils";
@@ -11,22 +11,15 @@ import { getAuthErrorMessage } from "../utils";
 export async function signUpEmailAction(input: SignUpInput) {
   const data = signUpFormSchema.parse(input);
   try {
-    const result = await auth.api.signUpEmail({
+    await auth.api.signUpEmail({
       body: {
         name: data.name,
-        email: data.email,
-        password: data.password,
-      },
-    });
-
-    await prisma.user.update({
-      where: {
-        id: result.user.id,
-      },
-      data: {
         lastName: data.lastName,
         gender: data.gender,
         country: data.country,
+        email: data.email,
+        role: "USER",
+        password: data.password,
       },
     });
 
@@ -43,8 +36,8 @@ export async function signUpEmailAction(input: SignUpInput) {
   }
 }
 
-export async function signInEmailAction(formData: FormData) {
-  const data = signInFormSchema.parse(formData);
+export async function signInEmailAction(input: SignInInput) {
+  const data = signInFormSchema.parse(input);
 
   try {
     await auth.api.signInEmail({
@@ -61,6 +54,8 @@ export async function signInEmailAction(formData: FormData) {
       const error = getAuthErrorMessage(errCode, err);
       return error;
     }
+
+    return { error: "Bir şeyler ters gitti!" };
   }
 }
 
@@ -77,4 +72,5 @@ export async function signOutAction() {
       return error;
     }
   }
+  return { error: "Bir şeyler ters gitti!" };
 }
