@@ -189,7 +189,7 @@ const config = {
       "value": "prisma-client-js"
     },
     "output": {
-      "value": "/Users/osmansimsek/Desktop/Projects/next-training/src/generated/prisma",
+      "value": "C:\\Users\\osman\\Desktop\\Kod\\Next.js\\auth-test\\src\\generated\\prisma",
       "fromEnvVar": null
     },
     "config": {
@@ -198,12 +198,12 @@ const config = {
     "binaryTargets": [
       {
         "fromEnvVar": null,
-        "value": "darwin-arm64",
+        "value": "windows",
         "native": true
       }
     ],
     "previewFeatures": [],
-    "sourceFilePath": "/Users/osmansimsek/Desktop/Projects/next-training/prisma/schema.prisma",
+    "sourceFilePath": "C:\\Users\\osman\\Desktop\\Kod\\Next.js\\auth-test\\prisma\\schema.prisma",
     "isCustomOutput": true
   },
   "relativeEnvPaths": {

@@ -10,15 +10,11 @@ import SelectField from "@/components/form/SelectField";
 import CountrySelectField from "@/components/form/CountrySelectField";
 import { toast } from "sonner";
 import { Spinner } from "@/components/ui/spinner";
-import { signUpWithProfile } from "@/lib/actions/signup.action";
+import { signUpEmailAction } from "@/lib/actions/sign-email.action";
 import { useRouter } from "next/navigation";
 import { signUpFormSchema as formSchema } from "@/lib/form-schemas";
 import { SignInInput, SignUpInput } from "@/types";
 import { countryOptions } from "@/lib/countries";
-
-const errorMessages: Record<string, string> = {
-  "User already exists. Use another email.": "Bu e-posta adresi zaten kayıtlı.",
-};
 
 const SignUp = () => {
   const router = useRouter();
@@ -37,20 +33,11 @@ const SignUp = () => {
   });
 
   async function onSubmit(values: SignInInput) {
-    try {
-      await signUpWithProfile(values);
-      toast.success("Hesabın başarıyla oluşturuldu.");
-      router.replace("/");
-    } catch (error: unknown) {
-      const err = error as { message?: string };
-
-      const backendMessage = err.message ?? "";
-
-      const toastMessage =
-        errorMessages[backendMessage] ?? "Bir hata oluştu. Lütfen tekrar dene.";
-
-      toast.error(toastMessage);
-      console.error(error);
+    const { error } = await signUpEmailAction(values);
+    if (error) toast.error(error);
+    else {
+      toast.success("Başarıyla kayıt oldunuz!");
+      router.replace("/profile");
     }
   }
 

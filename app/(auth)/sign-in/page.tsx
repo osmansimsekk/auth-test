@@ -6,12 +6,13 @@ import { Button } from "@/components/ui/button";
 import { Form } from "@/components/ui/form";
 import InputField from "@/components/form/InputField";
 import FormFooter from "@/components/form/FormFooter";
-import { toast } from "sonner";
-import { signIn } from "@/lib/auth-client";
+
 import { useRouter } from "next/navigation";
 import { Spinner } from "@/components/ui/spinner";
 import { signInFormSchema as formSchema } from "@/lib/form-schemas";
 import { SignInInput } from "@/types";
+import { signInEmailAction } from "@/lib/actions/sign-email.action";
+import { toast } from "sonner";
 
 const SignIn = () => {
   const form = useForm<SignInInput>({
@@ -26,35 +27,12 @@ const SignIn = () => {
   const router = useRouter();
 
   async function onSubmit(values: SignInInput) {
-    try {
-      await signIn.email(
-        {
-          ...values,
-        },
-        {
-          onRequest: async () => {
-            toast.promise(
-              signIn.email(values, {
-                onError: (ctx) => {
-                  throw new Error(ctx.error.message);
-                },
-                onSuccess: () => {
-                  router.replace("/");
-                  router.refresh();
-                },
-              }),
-              {
-                loading: "Giriş Yapılıyor...",
-                success: "Başarıyla Giriş Yaptınız.",
-                error: (err) =>
-                  `${err instanceof Error ? err.message : "Bir hata oluştu"}`,
-              }
-            );
-          },
-        }
-      );
-    } catch (e) {
-      console.error(e);
+    const { error } = await signInEmailAction(values);
+    if (error) {
+      toast.error(error);
+    } else {
+      toast.success("Başarıyla giriş yaptınız!");
+      router.replace("/profile");
     }
   }
 

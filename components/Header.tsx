@@ -31,6 +31,7 @@ const Header = ({
 }) => {
   const isMobile = useIsMobile();
   const [menuOpen, setMenuOpen] = useState(false);
+  const [isPending, setIsPending] = useState(false);
 
   const router = useRouter();
 
@@ -44,6 +45,12 @@ const Header = ({
           toast.success("Başarıyla çıkış yaptınız!");
           router.replace("/sign-in");
           router.refresh();
+        },
+        onRequest: () => {
+          setIsPending(true);
+        },
+        onResponse: () => {
+          setIsPending(false);
         },
       },
     });
@@ -126,6 +133,7 @@ const Header = ({
                 </Button>
               </Link>
               <Button
+                disabled={isPending}
                 variant="destructive"
                 onClick={async () => {
                   await handleSignOut();
@@ -234,6 +242,7 @@ const Header = ({
                     </Link>
                   </Button>
                   <Button
+                    disabled={isPending}
                     onClick={async () => {
                       await handleSignOut();
                       setMenuOpen(false);

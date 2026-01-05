@@ -10,7 +10,13 @@ export const auth = betterAuth({
 
   emailAndPassword: {
     enabled: true,
-    minPasswordLength: 6,
+    minPasswordLength: 8,
+    autoSignIn: false,
+  },
+  advanced: {
+    database: {
+      generateId: false,
+    },
   },
   plugins: [nextCookies()],
 });
