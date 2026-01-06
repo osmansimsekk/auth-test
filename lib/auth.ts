@@ -38,7 +38,8 @@ export const auth = betterAuth({
         required: true,
       },
       role: {
-        type: ["ADMIN", "USER"] as Array<UserRole>,
+        type: [UserRole.ADMIN, UserRole.USER] as Array<UserRole>,
+        required: false,
       },
     },
   },
@@ -73,6 +74,7 @@ export const auth = betterAuth({
         }
 
         const name = normalizeName(ctx.body.name);
+        const lastName = normalizeName(ctx.body.lastName);
 
         return {
           context: {
@@ -80,6 +82,7 @@ export const auth = betterAuth({
             body: {
               ...ctx.body,
               name,
+              lastName,
             },
           },
         };
