@@ -46,7 +46,7 @@ export function SelectItemComponent({ options, placeholder, userId }: Props) {
           setIsPending(true);
         },
         onResponse: () => {
-          setIsPending(true);
+          setIsPending(false);
         },
         onError: (ctx) => {
           toast.error(ctx.error.message);

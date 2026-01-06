@@ -105,16 +105,17 @@ const Header = ({
             <GuestButtons variant="desktop" />
           ) : (
             <div className="flex gap-4 items-center">
-              <Link href="/profile">
-                <Button>
+              <Button asChild>
+                <Link href="/profile">
                   <User />
                   <p>{session.user.name}</p>
-                </Button>
-              </Link>
+                </Link>
+              </Button>
               <Button
                 disabled={isLoggingOut}
                 variant="destructive"
                 onClick={handleSignOut}
+                className="cursor-pointer"
               >
                 <LogOut />
                 Çıkış Yap
@@ -198,12 +199,12 @@ const Header = ({
                 />
               ) : (
                 <div className="flex flex-col gap-4">
-                  <Link href="/profile" onClick={() => setMenuOpen(false)}>
-                    <Button className="flex gap-2 w-full">
+                  <Button className="flex gap-2 w-full" asChild>
+                    <Link href="/profile" onClick={() => setMenuOpen(false)}>
                       <User />
                       <p>{session.user.name}</p>
-                    </Button>
-                  </Link>
+                    </Link>
+                  </Button>
 
                   <Button
                     disabled={isLoggingOut}
@@ -211,6 +212,7 @@ const Header = ({
                       await handleSignOut();
                       setMenuOpen(false);
                     }}
+                    className="cursor-pointer"
                   >
                     <LogOut />
                     Çıkış Yap
