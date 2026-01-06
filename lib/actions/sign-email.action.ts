@@ -18,7 +18,6 @@ export async function signUpEmailAction(input: SignUpInput) {
         gender: data.gender,
         country: data.country,
         email: data.email,
-        role: "USER",
         password: data.password,
       },
     });

@@ -13,20 +13,20 @@ import {
 import { AlertDialogComponent } from "../common/AlertDialog";
 import { deleteUserAction } from "@/lib/actions/user.actions";
 import { toast } from "sonner";
-import { auth } from "@/lib/auth";
-import { UserWithRole } from "better-auth/plugins";
+import { Gender, UserRole } from "@/src/generated/prisma";
+import { SelectItemComponent } from "./SelectItem";
 
-type UserWithAdditionalFields = UserWithRole & {
+export type UserTableUser = {
+  id: string;
+  name: string;
   lastName: string;
-  gender?: string | null;
-  country?: string | null;
+  email: string;
+  gender: Gender;
+  country: string;
+  role?: UserRole;
 };
 
-export function UserTable({
-  users,
-}: {
-  users: Awaited<ReturnType<typeof auth.api.listUsers>>;
-}) {
+export function UserTable({ users }: { users: UserTableUser[] }) {
   return (
     <Table>
       <TableCaption>List of all users</TableCaption>
@@ -42,7 +42,7 @@ export function UserTable({
         </TableRow>
       </TableHeader>
       <TableBody>
-        {(users.users as UserWithAdditionalFields[]).map((user) => (
+        {(users as UserTableUser[]).map((user) => (
           <TableRow key={user.id}>
             <TableCell>
               <AlertDialogComponent
@@ -74,7 +74,16 @@ export function UserTable({
             <TableCell>{user.email}</TableCell>
             <TableCell>{user.gender ?? "N/A"}</TableCell>
             <TableCell>{user.country ?? "N/A"}</TableCell>
-            <TableCell>{user.role}</TableCell>
+            <TableCell>
+              <SelectItemComponent
+                userId={user.id}
+                placeholder={user.role as UserRole}
+                options={[
+                  { value: UserRole.ADMIN, text: UserRole.ADMIN },
+                  { value: UserRole.USER, text: UserRole.USER },
+                ]}
+              />
+            </TableCell>
           </TableRow>
         ))}
       </TableBody>
