@@ -26,7 +26,6 @@ export const GuestButtons = ({ variant, onClick }: GuestButtonsProps) => {
     );
   }
 
-  // mobile
   return (
     <>
       <Button variant="outline" className="w-full h-11 gap-2">

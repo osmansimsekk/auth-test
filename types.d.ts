@@ -1,7 +1,7 @@
 import z from "zod";
 
-type SignUpInput = z.infer<typeof signUpFormSchema>;
 type SignInInput = z.infer<typeof signInFormSchema>;
+type SignUpInput = z.infer<typeof signUpFormSchema>;
 
 type CountryOption = {
   label: string;
