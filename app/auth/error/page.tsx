@@ -29,5 +29,3 @@ const ErrorPage = async ({ searchParams }: Props) => {
 };
 
 export default ErrorPage;
-
-// Upsss! Giriş yapılırken bir hata oluştu!
