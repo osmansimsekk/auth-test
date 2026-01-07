@@ -12,6 +12,12 @@ export const auth = betterAuth({
   database: prismaAdapter(prisma, {
     provider: "postgresql",
   }),
+  socialProviders: {
+    google: {
+      clientId: process.env.GOOGLE_CLIENT_ID as string,
+      clientSecret: process.env.GOOGLE_CLIENT_SECRET as string,
+    },
+  },
 
   emailAndPassword: {
     enabled: true,
@@ -49,10 +55,29 @@ export const auth = betterAuth({
         before: async (user) => {
           const ADMIN_EMAILS = process.env.ADMIN_EMAILS?.split(";") ?? [];
 
-          if (ADMIN_EMAILS.includes(user.email)) {
-            return { data: { ...user, role: UserRole.ADMIN } };
+          let firstName = (user.name as string) || "";
+          let lastName = (user.lastName as string) || "";
+
+          if (!lastName && user.name) {
+            const split = splitFullName(user.name);
+            firstName = split.name;
+            lastName = split.lastName;
           }
-          return { data: user };
+
+          const role = ADMIN_EMAILS.includes(user.email)
+            ? UserRole.ADMIN
+            : UserRole.USER;
+
+          return {
+            data: {
+              ...user,
+              name: normalizeName(firstName || "User"),
+              lastName: normalizeName(lastName!),
+              gender: user.gender ?? "OTHER",
+              country: user.country ?? "TR",
+              role: role,
+            },
+          };
         },
       },
     },
@@ -101,3 +126,19 @@ export const auth = betterAuth({
 });
 
 export type ErrorCode = keyof typeof auth.$ERROR_CODES | "UNKNOWN";
+
+function splitFullName(fullName: string) {
+  const parts = fullName.trim().split(/\s+/);
+
+  if (parts.length === 1) {
+    return {
+      name: parts[0],
+      lastName: "-",
+    };
+  }
+
+  return {
+    name: parts.slice(0, -1).join(" "),
+    lastName: parts.at(-1) ?? "",
+  };
+}
