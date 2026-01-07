@@ -9,7 +9,10 @@ export const DarkModeToggle = ({ className }: { className?: string }) => {
 
   return (
     <Button
-      className={cn("flex items-center justify-between", className)}
+      className={cn(
+        "flex items-center justify-between cursor-pointer",
+        className
+      )}
       variant="outline"
       onClick={() => toggle()}
     >

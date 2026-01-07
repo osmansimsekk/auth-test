@@ -17,15 +17,15 @@ export const GuestButtons = ({ variant, onClick }: GuestButtonsProps) => {
           <Button variant="outline" className="gap-2">
             <User className="h-4 w-4" />
             Giriş Yap
-          </Button>
-        </Link>
+          </Link>
+        </Button>
 
         <Link href="/auth/sign-up">
           <Button className="gap-2">
             <UserPlus className="h-4 w-4" />
             Üye Ol
-          </Button>
-        </Link>
+          </Link>
+        </Button>
       </>
     );
   }
@@ -37,15 +37,15 @@ export const GuestButtons = ({ variant, onClick }: GuestButtonsProps) => {
         <Button variant="outline" className="w-full h-11 gap-2">
           <User className="h-4 w-4" />
           Giriş Yap
-        </Button>
-      </Link>
+        </Link>
+      </Button>
 
       <Link href="/auth/sign-up" onClick={onClick}>
         <Button className="w-full h-11 gap-2">
           <UserPlus className="h-4 w-4" />
           Üye Ol
-        </Button>
-      </Link>
+        </Link>
+      </Button>
     </>
   );
 };
