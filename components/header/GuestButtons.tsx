@@ -13,18 +13,14 @@ export const GuestButtons = ({ variant, onClick }: GuestButtonsProps) => {
   if (variant === "desktop") {
     return (
       <>
-        <Link href="/auth/sign-in">
-          <Button variant="outline" className="gap-2">
-            <User className="h-4 w-4" />
-            Giriş Yap
-          </Link>
+        <Button variant="outline" className="gap-2">
+          <Link href="/auth/sign-in">Giriş Yap</Link>
+          <User className="h-4 w-4" />
         </Button>
 
-        <Link href="/auth/sign-up">
-          <Button className="gap-2">
-            <UserPlus className="h-4 w-4" />
-            Üye Ol
-          </Link>
+        <Button className="gap-2">
+          <Link href="/auth/sign-up">Üye Ol</Link>
+          <UserPlus className="h-4 w-4" />
         </Button>
       </>
     );
@@ -33,18 +29,18 @@ export const GuestButtons = ({ variant, onClick }: GuestButtonsProps) => {
   // mobile
   return (
     <>
-      <Link href="/auth/sign-in" onClick={onClick}>
-        <Button variant="outline" className="w-full h-11 gap-2">
-          <User className="h-4 w-4" />
+      <Button variant="outline" className="w-full h-11 gap-2">
+        <Link href="/auth/sign-in" onClick={onClick}>
           Giriş Yap
         </Link>
+        <User className="h-4 w-4" />
       </Button>
 
-      <Link href="/auth/sign-up" onClick={onClick}>
-        <Button className="w-full h-11 gap-2">
-          <UserPlus className="h-4 w-4" />
+      <Button className="w-full h-11 gap-2">
+        <Link href="/auth/sign-up" onClick={onClick}>
           Üye Ol
         </Link>
+        <UserPlus className="h-4 w-4" />
       </Button>
     </>
   );
