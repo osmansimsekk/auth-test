@@ -43,7 +43,7 @@ const Header = ({
       setLoggingOut(false);
       toast.error(error);
     } else {
-      router.replace("/sign-in");
+      router.replace("/auth/sign-in");
       toast.success("Başarıyla çıkış yaptınız.");
     }
   };

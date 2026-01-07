@@ -12,7 +12,7 @@ const Page = async () => {
     headers: headersList,
   });
 
-  if (!session) redirect("/sign-in");
+  if (!session) redirect("/auth/sign-in");
   if (session.user.role !== "ADMIN") redirect("/");
 
   // From NEON Database

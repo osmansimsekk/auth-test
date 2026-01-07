@@ -17,6 +17,10 @@ export const auth = betterAuth({
       clientId: process.env.GOOGLE_CLIENT_ID as string,
       clientSecret: process.env.GOOGLE_CLIENT_SECRET as string,
     },
+    github: {
+      clientId: process.env.GITHUB_CLIENT_ID as string,
+      clientSecret: process.env.GITHUB_CLIENT_SECRET as string,
+    },
   },
 
   emailAndPassword: {
@@ -86,9 +90,15 @@ export const auth = betterAuth({
   session: {
     expiresIn: 30 * 24 * 60 * 60,
   },
+  account: {
+    accountLinking: {
+      enabled: false,
+    },
+  },
+
   hooks: {
     before: createAuthMiddleware(async (ctx) => {
-      if (ctx.path === "/sign-up/email") {
+      if (ctx.path === "/auth/sign-up/email") {
         const email = String(ctx.body.email);
         const domain = email.split("@")[1];
 

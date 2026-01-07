@@ -13,7 +13,7 @@ export default async function proxy(request: NextRequest) {
   const isProtected = protectedRoutes.includes(nextUrl.pathname);
 
   if (isProtected && !session) {
-    return NextResponse.redirect(new URL("/sign-in", request.url));
+    return NextResponse.redirect(new URL("/auth/sign-in", request.url));
   }
 
   return NextResponse.next();

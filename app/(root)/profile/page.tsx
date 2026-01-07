@@ -12,7 +12,7 @@ const Profile = async () => {
     headers: headersList,
   });
 
-  if (!session) redirect("/sign-in");
+  if (!session) redirect("/auth/sign-in");
 
   const FULL_POST_ACCESS = await auth.api.userHasPermission({
     headers: headersList,

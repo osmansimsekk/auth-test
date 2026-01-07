@@ -18,7 +18,7 @@ const SignOAuthButtons = ({ type, provider, icon }: Props) => {
     await signIn.social({
       provider,
       callbackURL: "/profile",
-      errorCallbackURL: "/auth/login/error",
+      errorCallbackURL: "/auth/error",
       fetchOptions: {
         onRequest: () => {
           setIsPending(true);
