@@ -12,7 +12,7 @@ const Page = async () => {
     headers: headersList,
   });
 
-  if (!session) redirect("/sign-in");
+  if (!session) redirect("/auth/sign-in");
   if (session.user.role !== "ADMIN") redirect("/");
 
   // From NEON Database
@@ -32,7 +32,7 @@ const Page = async () => {
   });
 
   const users = usersResult.users.sort((a, b) => {
-    if (a.role === UserRole.ADMIN && b.role !== UserRole.ADMIN) return -1;
+    if (a.role === UserRole.ADMIN && b.role === UserRole.USER) return -1;
     if (a.role !== UserRole.ADMIN && b.role === UserRole.ADMIN) return 1;
     return 0;
   }) as unknown as UserTableUser[];

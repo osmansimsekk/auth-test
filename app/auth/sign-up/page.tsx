@@ -15,9 +15,14 @@ import { useRouter } from "next/navigation";
 import { signUpFormSchema as formSchema } from "@/lib/formSchemas";
 import { SignUpInput } from "@/types";
 import { countryOptions } from "@/lib/countries";
+import SignOAuthButtons from "@/components/form/SignOAuthButtons";
+import GoogleIcon from "@/components/form/GoogleIcon";
+import { GithubIcon } from "lucide-react";
+import { useTheme } from "@/providers/ThemeProvider";
 
 const SignUp = () => {
   const router = useRouter();
+  const { isDark } = useTheme();
 
   const form = useForm<SignUpInput>({
     resolver: zodResolver(formSchema),
@@ -67,7 +72,7 @@ const SignUp = () => {
                 control={form.control}
                 name="email"
                 label="Email"
-                placeholder="nike@tr.com"
+                placeholder="example@gmail.com"
                 error={form.formState.errors.email?.message}
               />
             </div>
@@ -118,6 +123,17 @@ const SignUp = () => {
               </div>
             </Button>
             <FormFooter />
+            <hr className="w-full mb-5 mt-2" />
+            <SignOAuthButtons
+              type="Sign Up"
+              provider="google"
+              icon={<GoogleIcon color={isDark ? "#000" : "#fff"} />}
+            />
+            <SignOAuthButtons
+              type="Sign Up"
+              provider="github"
+              icon={<GithubIcon />}
+            />
           </div>
         </form>
       </Form>

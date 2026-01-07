@@ -13,6 +13,10 @@ import { signInFormSchema as formSchema } from "@/lib/formSchemas";
 import { SignInInput } from "@/types";
 import { signInEmailAction } from "@/lib/actions/sign-email.action";
 import { toast } from "sonner";
+import SignOAuthButtons from "@/components/form/SignOAuthButtons";
+import { GithubIcon } from "lucide-react";
+import GoogleIcon from "@/components/form/GoogleIcon";
+import { useTheme } from "@/providers/ThemeProvider";
 
 const SignIn = () => {
   const form = useForm<SignInInput>({
@@ -24,7 +28,9 @@ const SignIn = () => {
 
     mode: "onBlur",
   });
+
   const router = useRouter();
+  const { isDark } = useTheme();
 
   async function onSubmit(values: SignInInput) {
     const { error } = await signInEmailAction(values);
@@ -44,7 +50,7 @@ const SignIn = () => {
             control={form.control}
             name="email"
             type="email"
-            placeholder="nike@tr.com"
+            placeholder="example@gmail.com"
             label="Email"
             error={form.formState.errors.email?.message}
           />
@@ -71,6 +77,17 @@ const SignIn = () => {
             </Button>
 
             <FormFooter />
+            <hr className="w-full mb-5 mt-2" />
+            <SignOAuthButtons
+              type="Sign Up"
+              provider="google"
+              icon={<GoogleIcon color={isDark ? "#000" : "#fff"} />}
+            />
+            <SignOAuthButtons
+              type="Sign In"
+              provider="github"
+              icon={<GithubIcon />}
+            />
           </div>
         </form>
       </Form>

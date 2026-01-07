@@ -77,12 +77,19 @@ export function getAuthErrorMessage(
   }
 }
 
-export function normalizeName(name: string) {
+export function normalizeName(name: string): string {
   return name
     .trim()
     .replace(/\s+/g, " ")
-    .replace(/[^a-zA-Z\s'-]/g, "")
-    .replace(/\b\w/g, (char) => char.toUpperCase());
+    .replace(/[^a-zA-ZçÇğĞıİöÖşŞüÜ\s'-]/g, "")
+    .toLocaleLowerCase("tr-TR")
+    .replace(/(^\w|\s\w|[çÇğĞıİöÖşŞüÜ])/g, (match, p1, offset) => {
+      const previousChar = name.charAt(offset - 1);
+      if (offset === 0 || previousChar === " ") {
+        return match.toLocaleUpperCase("tr-TR");
+      }
+      return match;
+    });
 }
 
 export const VALID_DOMAINS = () => {
