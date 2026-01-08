@@ -29,6 +29,18 @@ export const auth = betterAuth({
     minPasswordLength: 8,
     autoSignIn: false,
     requireEmailVerification: true,
+    resetPasswordTokenExpiresIn: 10 * 60,
+    sendResetPassword: async ({ user, url }) => {
+      await sendEmailAction({
+        to: user.email,
+        subject: "Şifre Sıfırlama",
+        meta: {
+          description:
+            "Şifrenizi sıfırlamak için aşağıdaki bağlantıya tıklayın.",
+          link: url,
+        },
+      });
+    },
   },
   emailVerification: {
     sendOnSignUp: true,

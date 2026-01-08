@@ -17,6 +17,7 @@ import SignOAuthButtons from "@/components/form/SignOAuthButtons";
 import { GithubIcon } from "lucide-react";
 import GoogleIcon from "@/components/form/GoogleIcon";
 import { useTheme } from "@/providers/ThemeProvider";
+import Link from "next/link";
 
 const SignIn = () => {
   const form = useForm<SignInInput>({
@@ -55,14 +56,23 @@ const SignIn = () => {
             error={form.formState.errors.email?.message}
           />
 
-          <InputField
-            control={form.control}
-            name="password"
-            type="password"
-            label="Şifre"
-            placeholder="Şifrenizi girin"
-            error={form.formState.errors.password?.message}
-          />
+          <div className="flex flex-col gap-1">
+            <InputField
+              control={form.control}
+              name="password"
+              type="password"
+              label="Şifre"
+              placeholder="Şifrenizi girin"
+              error={form.formState.errors.password?.message}
+            />
+
+            <Link
+              href="/auth/forgot-password"
+              className="-mt-4 text-sm text-right text-foreground/50 hover:text-foreground hover:underline"
+            >
+              Şifrenizi mi unuttunuz?
+            </Link>
+          </div>
 
           <div className="flex flex-col gap-4 mt-5">
             <Button type="submit" disabled={form.formState.isSubmitting}>

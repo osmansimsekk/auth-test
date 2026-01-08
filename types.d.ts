@@ -1,10 +1,13 @@
 import z from "zod";
+import { resetPasswordFormSchema } from "./lib/formSchemas";
 
 type SignInInput = z.infer<typeof signInFormSchema>;
 type SignUpInput = z.infer<typeof signUpFormSchema>;
-type ResendEmailVerification = z.infer<
+type ResendEmailVerificationInput = z.infer<
   typeof resendEmailVerificationFromSchema
 >;
+
+type ResetPasswordInput = z.infer<typeof resetPasswordFormSchema>;
 
 type CountryOption = {
   label: string;
