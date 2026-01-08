@@ -49,3 +49,17 @@ export const resendEmailVerificationFromSchema = z.object({
     .min(1, { message: "E-posta adresi zorunludur." })
     .email({ message: "Geçerli bir e-posta adresi giriniz." }),
 });
+
+export const resetPasswordFormSchema = z
+  .object({
+    password: z.string().min(8, {
+      message: "Şifre en az 8 karakter olmalıdır.",
+    }),
+    passwordConfirm: z.string().min(8, {
+      message: "Şifre en az 8 karakter olmalıdır.",
+    }),
+  })
+  .refine((data) => data.password === data.passwordConfirm, {
+    message: "Şifreler eşleşmiyor.",
+    path: ["passwordConfirm"],
+  });
