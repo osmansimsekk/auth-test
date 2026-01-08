@@ -3,11 +3,14 @@
 import transporter from "@/lib/nodemailer";
 
 const styles = {
+  body: "background-color:#f5f5f5;padding:40px 0;",
   container:
-    "max-width:500px;margin:20px auto;padding:20px;border:1px solid #ddd;border-radius:6px;",
-  heading: "font-size:20px;color:#333;",
-  paragraph: "font-size:16px;",
-  link: "display:inline-block;margin-top:15px;padding:10px 15px;background:#007bff;color:#fff;text-decoration:none;border-radius:4px;",
+    "max-width:520px;margin:0 auto;background:#ffffff;padding:32px;border-radius:12px;border:1px solid #e5e5e5;font-family:Arial,Helvetica,sans-serif;",
+  heading: "font-size:22px;font-weight:600;color:#111111;margin-bottom:16px;",
+  paragraph: "font-size:16px;color:#444444;line-height:1.6;margin-bottom:24px;",
+  buttonWrapper: "text-align:center;",
+  link: "display:inline-block;padding:12px 24px;background:#111111;color:#ffffff;text-decoration:none;border-radius:8px;font-size:15px;font-weight:500;",
+  footer: "margin-top:32px;font-size:12px;color:#888888;text-align:center;",
 };
 
 export async function sendEmailAction({
@@ -25,13 +28,28 @@ export async function sendEmailAction({
   const mailOptions = {
     from: process.env.NODEMAILER_USER,
     to,
-    subject: `Auth-Test - ${subject}`,
+    subject: `Auth-Test • ${subject}`,
     html: `
-    <div style="${styles.container}">
-      <h1 style="${styles.heading}">${subject}</h1>
-      <p style="${styles.paragraph}">${meta.description}</p>
-      <a href="${meta.link}" style="${styles.link}">Click Here</a>
-    </div>
+      <div style="${styles.body}">
+        <div style="${styles.container}">
+          <h1 style="${styles.heading}">${subject}</h1>
+
+          <p style="${styles.paragraph}">
+            ${meta.description}
+          </p>
+
+          <div style="${styles.buttonWrapper}">
+            <a href="${meta.link}" style="${styles.link}">
+              Devam Et
+            </a>
+          </div>
+
+          <div style="${styles.footer}">
+            Eğer bu isteği siz yapmadıysanız, bu e-postayı güvenle
+            yok sayabilirsiniz.
+          </div>
+        </div>
+      </div>
     `,
   };
 
