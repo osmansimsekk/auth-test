@@ -13,6 +13,13 @@ import {
   NavigationMenuTrigger,
 } from "@/components/ui/navigation-menu";
 
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion";
+
 import { Button } from "@/components/ui/button";
 import { navigationData } from "../../public/data/contants";
 import { useIsMobile } from "@/hooks/useMobile";
@@ -24,6 +31,7 @@ import { DarkModeToggle } from "@/components/header/DarkModeToggle";
 import { signOutAction } from "@/lib/actions/sign-email.action";
 import { GuestButtons } from "./GuestButtons";
 import { auth } from "@/lib/auth";
+import { UserMenuButtons } from "./UserMenuButtons";
 
 const Header = ({
   session,
@@ -45,13 +53,13 @@ const Header = ({
     } else {
       router.replace("/auth/sign-in");
       toast.success("Başarıyla çıkış yaptınız.");
+      setMenuOpen(false);
     }
   };
 
   return (
     <>
       <header className="fixed top-0 left-0 right-0 z-50 flex items-center border-b-[0.5px] px-6 lg:px-10 bg-background py-2">
-        {/* Logo */}
         <Link href="/" className="z-50">
           <Image
             src="/images/logo.png"
@@ -62,7 +70,6 @@ const Header = ({
           />
         </Link>
 
-        {/* Desktop Navigation */}
         <div className="hidden flex-1 lg:flex justify-center">
           <NavigationMenu viewport={isMobile}>
             <NavigationMenuList>
@@ -71,7 +78,6 @@ const Header = ({
                   <NavigationMenuTrigger>
                     {category.trigger}
                   </NavigationMenuTrigger>
-
                   <NavigationMenuContent>
                     <ul className="flex flex-col w-[320px] gap-1 p-2">
                       {category.items.map((item) => (
@@ -97,131 +103,117 @@ const Header = ({
           </NavigationMenu>
         </div>
 
-        {/* Desktop Auth */}
         <div className="hidden lg:flex gap-4 items-center">
           <DarkModeToggle />
-
           {!session ? (
             <GuestButtons variant="desktop" />
           ) : (
             <div className="flex gap-4 items-center">
-              <Button asChild>
+              <Button asChild variant="ghost">
                 <Link href="/profile">
-                  <User />
-                  <p>{session.user.name}</p>
+                  <User className="w-4 h-4 mr-2" />
+                  {session.user.name}
                 </Link>
               </Button>
               <Button
                 disabled={isLoggingOut}
                 variant="destructive"
                 onClick={handleSignOut}
-                className="cursor-pointer"
               >
-                <LogOut />
+                <LogOut className="w-4 h-4 mr-2" />
                 Çıkış Yap
               </Button>
             </div>
           )}
         </div>
 
-        {/* Mobile Hamburger */}
         <div className="lg:hidden ml-auto z-50">
-          <Button
-            variant="default"
-            size="icon"
-            onClick={() => setMenuOpen(true)}
-          >
+          <Button variant="ghost" size="icon" onClick={() => setMenuOpen(true)}>
             <Menu className="w-7 h-7" />
           </Button>
         </div>
       </header>
 
       <div
-        className={`
-    fixed inset-0 z-9999
-    flex items-center justify-center
-    bg-background/90
-    transition-all duration-300 ease-out
-    ${
-      menuOpen
-        ? "opacity-100 backdrop-blur-md visible"
-        : "opacity-0 backdrop-blur-0 invisible"
-    }
-  `}
+        className={`fixed inset-0 z-9999 flex flex-col bg-background transition-all duration-300 ${
+          menuOpen
+            ? "translate-x-0 opacity-100 visible"
+            : "translate-x-full opacity-0 invisible"
+        }`}
       >
-        {/* Close */}
-
-        <Button
-          variant="default"
-          onClick={() => setMenuOpen(false)}
-          className="absolute top-5 right-5"
-        >
-          <X className="w-5 h-5" />
-        </Button>
-        <DarkModeToggle className="absolute top-15 right-5" />
-
-        {/* Menu Content */}
-        <nav
-          className={`
-      w-full max-w-md px-6
-      transition-all duration-300 ease-out
-      ${menuOpen ? "translate-y-0 opacity-100" : "translate-y-4 opacity-0"}
-    `}
-        >
-          <div className="flex flex-col gap-10">
-            {navigationData.map((category) => (
-              <div key={category.trigger}>
-                <p className="text-[11px] uppercase tracking-widest text-muted-foreground mb-3">
-                  {category.trigger}
-                </p>
-
-                <div className="flex flex-col gap-3">
-                  {category.items.map((item) => (
-                    <Link
-                      key={item.href}
-                      href={item.href}
-                      onClick={() => setMenuOpen(false)}
-                      className="text-base font-medium hover:text-primary transition"
-                    >
-                      {item.title}
-                    </Link>
-                  ))}
-                </div>
-              </div>
-            ))}
-
-            {/* Auth */}
-            <div className="pt-6 border-t flex flex-col gap-3">
-              {!session ? (
-                <GuestButtons
-                  variant="mobile"
-                  onClick={() => setMenuOpen(false)}
-                />
-              ) : (
-                <div className="flex flex-col gap-4">
-                  <Button className="flex gap-2 w-full" asChild>
-                    <Link href="/profile" onClick={() => setMenuOpen(false)}>
-                      <User />
-                      <p>{session.user.name}</p>
-                    </Link>
-                  </Button>
-
-                  <Button
-                    disabled={isLoggingOut}
-                    onClick={async () => {
-                      await handleSignOut();
-                      setMenuOpen(false);
-                    }}
-                    className="cursor-pointer"
-                  >
-                    <LogOut />
-                    Çıkış Yap
-                  </Button>
-                </div>
-              )}
-            </div>
+        <div className="flex items-center justify-between px-6 py-4 border-b">
+          <Image
+            src="/images/logo.png"
+            alt="Logo"
+            width={70}
+            height={70}
+            className="invert dark:invert-0"
+          />
+          <div className="flex items-center gap-2">
+            <DarkModeToggle />
+            <Button
+              variant="ghost"
+              size="icon"
+              onClick={() => setMenuOpen(false)}
+            >
+              <X className="w-6 h-6" />
+            </Button>
           </div>
-        </nav>
+        </div>
+
+        <div className="flex flex-col flex-1 justify-between overflow-hidden">
+          <div className="flex-1 overflow-y-auto px-6 py-4">
+            <Accordion type="single" collapsible className="w-full">
+              {navigationData.map((category, index) => (
+                <AccordionItem
+                  value={`item-${index}`}
+                  key={category.trigger}
+                  className="border-b border-muted/50"
+                >
+                  <AccordionTrigger className="text-xl font-medium hover:no-underline py-5">
+                    {category.trigger}
+                  </AccordionTrigger>
+                  <AccordionContent>
+                    <div className="flex flex-col gap-6 pl-2 pb-4 mt-2">
+                      {category.items.map((item) => (
+                        <Link
+                          key={item.href}
+                          href={item.href}
+                          onClick={() => setMenuOpen(false)}
+                          className="group"
+                        >
+                          <div className="font-semibold text-lg text-foreground group-hover:text-primary transition-colors">
+                            {item.title}
+                          </div>
+                          <div className="text-sm text-muted-foreground">
+                            {item.description}
+                          </div>
+                        </Link>
+                      ))}
+                    </div>
+                  </AccordionContent>
+                </AccordionItem>
+              ))}
+            </Accordion>
+          </div>
+
+          <div className="p-6 bg-muted/20 border-t mt-auto">
+            {!session ? (
+              <GuestButtons
+                variant="mobile"
+                onClick={() => setMenuOpen(false)}
+              />
+            ) : (
+              <UserMenuButtons
+                variant="mobile"
+                userName={session.user.name}
+                isLoggingOut={isLoggingOut}
+                onSignOut={handleSignOut}
+                onCloseMenu={() => setMenuOpen(false)}
+              />
+            )}
+          </div>
+        </div>
       </div>
     </>
   );

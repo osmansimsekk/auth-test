@@ -15,32 +15,32 @@ export const GuestButtons = ({ variant, onClick }: GuestButtonsProps) => {
       <>
         <Button variant="outline" className="gap-2">
           <Link href="/auth/sign-in">Giriş Yap</Link>
-          <User className="h-4 w-4" />
+          <User />
         </Button>
 
         <Button className="gap-2">
           <Link href="/auth/sign-up">Üye Ol</Link>
-          <UserPlus className="h-4 w-4" />
+          <UserPlus />
         </Button>
       </>
     );
   }
 
   return (
-    <>
-      <Button variant="outline" className="w-full h-11 gap-2">
+    <div className="flex flex-col gap-5 max-w-md">
+      <Button variant="outline" asChild>
         <Link href="/auth/sign-in" onClick={onClick}>
+          <User />
           Giriş Yap
         </Link>
-        <User className="h-4 w-4" />
       </Button>
 
-      <Button className="w-full h-11 gap-2">
+      <Button asChild>
         <Link href="/auth/sign-up" onClick={onClick}>
+          <UserPlus />
           Üye Ol
         </Link>
-        <UserPlus className="h-4 w-4" />
       </Button>
-    </>
+    </div>
   );
 };
