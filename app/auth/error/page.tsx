@@ -7,7 +7,6 @@ type Props = {
 
 const ErrorPage = async ({ searchParams }: Props) => {
   const params = await searchParams;
-  console.log(params);
 
   return (
     <div className="lg:w-1/2 w-screen flex items-center justify-center mx-auto lg:px-20 px-10 flex-col gap-10">
