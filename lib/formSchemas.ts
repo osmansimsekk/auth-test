@@ -42,3 +42,10 @@ export const signInFormSchema = z.object({
     message: "Şifre en az 8 karakter olmalıdır.",
   }),
 });
+
+export const resendEmailVerificationFromSchema = z.object({
+  email: z
+    .string()
+    .min(1, { message: "E-posta adresi zorunludur." })
+    .email({ message: "Geçerli bir e-posta adresi giriniz." }),
+});

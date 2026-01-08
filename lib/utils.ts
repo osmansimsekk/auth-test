@@ -2,6 +2,7 @@ import { clsx, type ClassValue } from "clsx";
 import { twMerge } from "tailwind-merge";
 import { ErrorCode } from "./auth";
 import { APIError } from "better-auth";
+import { redirect } from "next/navigation";
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
@@ -27,8 +28,8 @@ export function getAuthErrorMessage(
     case "PASSWORD_TOO_LONG":
       return { error: "Şifre çok uzun." };
 
-    case "EMAIL_NOT_VERIFIED":
-      return { error: "E-posta adresiniz doğrulanmamış." };
+    // case "EMAIL_NOT_VERIFIED":
+    //   return { error: "E-posta adresiniz doğrulanmamış." };
 
     case "USER_NOT_FOUND":
       return { error: "Kullanıcı bulunamadı." };
@@ -68,6 +69,9 @@ export function getAuthErrorMessage(
       return {
         error: "Kullanıcının e-posta adresi bulunamadı.",
       };
+
+    case "EMAIL_NOT_VERIFIED":
+      redirect("/auth/verify?error=email_not_verified");
 
     case "UNKNOWN":
     default:
