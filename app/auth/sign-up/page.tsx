@@ -42,7 +42,7 @@ const SignUp = () => {
     if (error) toast.error(error);
     else {
       toast.success("Başarıyla kayıt oldunuz!");
-      router.replace("/profile");
+      router.replace("/auth/sign-up/success");
     }
   }
 
