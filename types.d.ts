@@ -13,4 +13,5 @@ type UpdateUserFormInput = z.infer<typeof updateUserFormSchema>;
 type CountryOption = {
   label: string;
   value: string;
+  flag: string;
 };

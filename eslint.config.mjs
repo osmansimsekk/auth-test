@@ -16,6 +16,8 @@ const eslintConfig = defineConfig([
 
     // Generated files
     "src/generated/**",
+
+    "components/ui/**",
   ]),
 ]);
 
