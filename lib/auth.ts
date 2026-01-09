@@ -52,10 +52,10 @@ export const auth = betterAuth({
 
       await sendEmailAction({
         to: user.email,
-        subject: "Verify Your Email",
+        subject: "Emailinizi Doğrulayın",
         meta: {
           description:
-            "Please verify your email adress to complete registration.",
+            "Kayıt işleminizi tamamlamak için aşağıdaki bağlantıya tıklayın.",
           link: String(link),
         },
       });
@@ -76,6 +76,10 @@ export const auth = betterAuth({
         type: ["MALE", "FEMALE"] as Array<Gender>,
         required: true,
       },
+      image: {
+        type: "string",
+        required: false,
+      },
       country: {
         type: "string",
         required: true,
@@ -91,6 +95,7 @@ export const auth = betterAuth({
       create: {
         before: async (user) => {
           const ADMIN_EMAILS = process.env.ADMIN_EMAILS?.split(";") ?? [];
+          console.log(user);
 
           let firstName = (user.name as string) || "";
           let lastName = (user.lastName as string) || "";
@@ -109,6 +114,7 @@ export const auth = betterAuth({
             data: {
               ...user,
               name: normalizeName(firstName || "User"),
+              image: user.image || "",
               lastName: normalizeName(lastName!),
               gender: user.gender ?? "OTHER",
               country: user.country ?? "TR",

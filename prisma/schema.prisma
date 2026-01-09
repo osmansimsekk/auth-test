@@ -28,9 +28,11 @@ model User {
   name          String
   lastName      String
 
+
   email         String    @unique
   emailVerified Boolean   @default(false)
-  image         String?
+  image         String?    @default("")
+
 
   gender        Gender? @default(MALE)
   country       String?   @db.Char(2) @default("TR")

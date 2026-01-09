@@ -59,7 +59,7 @@ const Header = ({
 
   return (
     <>
-      <header className="fixed top-0 left-0 right-0 z-50 flex items-center border-b-[0.5px] px-6 lg:px-10 bg-background py-2">
+      <header className="fixed top-0 left-0 right-0 z-50 grid grid-cols-3 items-center border-b-[0.5px] px-6 lg:px-10 bg-background py-2">
         <Link href="/" className="z-50">
           <Image
             src="/images/logo.png"
@@ -103,7 +103,7 @@ const Header = ({
           </NavigationMenu>
         </div>
 
-        <div className="hidden lg:flex gap-4 items-center">
+        <div className="hidden lg:flex gap-4 items-center justify-self-end">
           <DarkModeToggle />
           {!session ? (
             <GuestButtons variant="desktop" />
@@ -113,6 +113,7 @@ const Header = ({
               onSignOut={handleSignOut}
               isLoggingOut={isLoggingOut}
               variant="desktop"
+              userImage={session.user.image || ""}
             />
           )}
         </div>
@@ -197,6 +198,7 @@ const Header = ({
               <UserMenuButtons
                 variant="mobile"
                 userName={session.user.name}
+                userImage={session.user.image || ""}
                 isLoggingOut={isLoggingOut}
                 onSignOut={handleSignOut}
                 onCloseMenu={() => setMenuOpen(false)}

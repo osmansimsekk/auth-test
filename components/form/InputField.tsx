@@ -31,7 +31,9 @@ const InputField = <T extends FieldValues>({
       name={name}
       render={({ field }) => (
         <FormItem className="flex flex-col gap-1">
-          <FormLabel className="form-label">{label}</FormLabel>
+          <FormLabel className="form-label" htmlFor={field.name}>
+            {label}
+          </FormLabel>
 
           <FormControl>
             <div className="relative">

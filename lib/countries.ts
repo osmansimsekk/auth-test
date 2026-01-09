@@ -9,3 +9,8 @@ export const countryOptions = countries
   .sort((a, b) => a.label.localeCompare(b.label));
 
 export const COUNTRY_CODES = new Set(countries.map((c) => c.cca2));
+
+export const getCountryByCode = (code: string | undefined | null) => {
+  if (!code) return null;
+  return countryOptions.find((country) => country.value === code) || null;
+};

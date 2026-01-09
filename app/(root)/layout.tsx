@@ -11,10 +11,11 @@ export default async function RootGroupLayout({
   const session = await auth.api.getSession({
     headers: header,
   });
+
   return (
     <>
       <Header session={session} />
-      <main className="min-h-screen pt-20 overflow-visible">{children}</main>
+      <main className="min-h-[calc(100-h-20)] w-full">{children}</main>
     </>
   );
 }

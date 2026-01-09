@@ -46,7 +46,7 @@ export const signInFormSchema = z.object({
 export const resendEmailVerificationFromSchema = z.object({
   email: z
     .string()
-    .min(1, { message: "E-posta adresi zorunludur." })
+    .min(2, { message: "E-posta adresi zorunludur." })
     .email({ message: "Geçerli bir e-posta adresi giriniz." }),
 });
 
@@ -63,3 +63,41 @@ export const resetPasswordFormSchema = z
     message: "Şifreler eşleşmiyor.",
     path: ["passwordConfirm"],
   });
+
+export const updatePasswordFormSchema = z
+  .object({
+    oldpassword: z.string().min(8, {
+      message: "Mevcut şifre en az 8 karakter olmalıdır.",
+    }),
+    password: z.string().min(8, {
+      message: "Şifre en az 8 karakter olmalıdır.",
+    }),
+    passwordConfirm: z.string().min(8, {
+      message: "Şifre en az 8 karakter olmalıdır.",
+    }),
+  })
+  .refine((data) => data.password === data.passwordConfirm, {
+    message: "Şifreler eşleşmiyor.",
+    path: ["passwordConfirm"],
+  });
+
+export const updateUserFormSchema = z.object({
+  name: z
+    .string()
+    .min(2, { message: "Ad en az 2 karakter olmalıdır." })
+    .regex(/^[A-Za-zÇĞİÖŞÜçğıöşü\s-]+$/, {
+      message: "Ad sadece harflerden oluşmalıdır.",
+    })
+    .optional(),
+  lastName: z
+    .string()
+    .min(2, { message: "Soyad en az 2 karakter olmalıdır." })
+    .regex(/^[A-Za-zÇĞİÖŞÜçğıöşü\s-]+$/, {
+      message: "Soyad sadece harflerden oluşmalıdır.",
+    })
+    .optional(),
+  image: z.preprocess(
+    (val) => (val === "" ? undefined : val),
+    z.string().url({ message: "Geçerli bir resim URL'si giriniz." }).optional()
+  ),
+});

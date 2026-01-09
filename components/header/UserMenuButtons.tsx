@@ -3,6 +3,8 @@
 import Link from "next/link";
 import { User, LogOut } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { Avatar, AvatarFallback } from "../ui/avatar";
+import { AvatarImage } from "@radix-ui/react-avatar";
 
 type Props = {
   userName: string;
@@ -10,6 +12,7 @@ type Props = {
   isLoggingOut?: boolean;
   variant?: "desktop" | "mobile";
   onCloseMenu?: () => void;
+  userImage?: string;
 };
 
 export const UserMenuButtons = ({
@@ -18,13 +21,23 @@ export const UserMenuButtons = ({
   isLoggingOut,
   variant = "desktop",
   onCloseMenu,
+  userImage,
 }: Props) => {
   if (variant === "mobile") {
     return (
       <div className="flex flex-col gap-3">
         <Button asChild variant="outline">
           <Link href="/profile" onClick={onCloseMenu}>
-            <User />
+            <Avatar className="size-6">
+              <AvatarImage
+                src={userImage}
+                alt="@shadcn"
+                sizes="(max-width: 768px) 32px, 40px"
+              />
+              <AvatarFallback>
+                <User />
+              </AvatarFallback>
+            </Avatar>
             {userName}
           </Link>
         </Button>
@@ -44,7 +57,12 @@ export const UserMenuButtons = ({
     <div className="flex gap-4 items-center">
       <Button asChild variant="outline">
         <Link href="/profile">
-          <User />
+          <Avatar className="size-6">
+            <AvatarImage src={userImage} alt="@shadcn" />
+            <AvatarFallback>
+              <User />
+            </AvatarFallback>
+          </Avatar>
           {userName}
         </Link>
       </Button>

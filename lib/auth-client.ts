@@ -12,7 +12,9 @@ export const authClient = createAuthClient({
 export const {
   admin,
   signIn,
+  signOut,
   sendVerificationEmail,
   requestPasswordReset,
   resetPassword,
+  getSession,
 } = authClient;
