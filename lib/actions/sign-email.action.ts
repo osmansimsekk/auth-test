@@ -2,7 +2,7 @@
 
 import { auth, ErrorCode } from "@/lib/auth";
 
-import { signInFormSchema, signUpFormSchema } from "../formSchemas";
+import { signInFormSchema, signUpFormSchema } from "../form-schemas";
 import { SignInInput, SignUpInput } from "@/types";
 import { headers } from "next/headers";
 import { APIError } from "better-auth/api";

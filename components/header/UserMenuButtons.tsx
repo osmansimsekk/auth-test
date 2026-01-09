@@ -24,7 +24,7 @@ export const UserMenuButtons = ({
       <div className="flex flex-col gap-3">
         <Button asChild variant="outline">
           <Link href="/profile" onClick={onCloseMenu}>
-            <User className="mr-2 h-4 w-4" />
+            <User />
             {userName}
           </Link>
         </Button>
@@ -34,25 +34,23 @@ export const UserMenuButtons = ({
           variant="destructive"
           onClick={onSignOut}
         >
-          <LogOut className="mr-2 h-4 w-4" />
+          <LogOut />
           Çıkış Yap
         </Button>
       </div>
     );
   }
-
-  // desktop
   return (
     <div className="flex gap-4 items-center">
-      <Button asChild variant="ghost">
+      <Button asChild variant="outline">
         <Link href="/profile">
-          <User className="w-4 h-4 mr-2" />
+          <User />
           {userName}
         </Link>
       </Button>
 
-      <Button disabled={isLoggingOut} variant="destructive" onClick={onSignOut}>
-        <LogOut className="w-4 h-4 mr-2" />
+      <Button disabled={isLoggingOut} variant="default" onClick={onSignOut}>
+        <LogOut />
         Çıkış Yap
       </Button>
     </div>

@@ -4,7 +4,7 @@ import { Form } from "@/components/ui/form";
 import { useForm } from "react-hook-form";
 import { ResendEmailVerificationInput } from "@/types";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { resendEmailVerificationFromSchema as formSchema } from "@/lib/formSchemas";
+import { resendEmailVerificationFromSchema as formSchema } from "@/lib/form-schemas";
 import { requestPasswordReset, sendVerificationEmail } from "@/lib/auth-client";
 import { useState } from "react";
 import { toast } from "sonner";

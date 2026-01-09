@@ -1,5 +1,5 @@
 import z from "zod";
-import { resetPasswordFormSchema } from "./lib/formSchemas";
+import { resetPasswordFormSchema } from "./lib/form-schemas";
 
 type SignInInput = z.infer<typeof signInFormSchema>;
 type SignUpInput = z.infer<typeof signUpFormSchema>;

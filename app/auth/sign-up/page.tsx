@@ -12,7 +12,7 @@ import { toast } from "sonner";
 import { Spinner } from "@/components/ui/spinner";
 import { signUpEmailAction } from "@/lib/actions/sign-email.action";
 import { useRouter } from "next/navigation";
-import { signUpFormSchema as formSchema } from "@/lib/formSchemas";
+import { signUpFormSchema as formSchema } from "@/lib/form-schemas";
 import { SignUpInput } from "@/types";
 import { countryOptions } from "@/lib/countries";
 import SignOAuthButtons from "@/components/form/SignOAuthButtons";

@@ -9,7 +9,7 @@ import FormFooter from "@/components/form/FormFooter";
 
 import { useRouter } from "next/navigation";
 import { Spinner } from "@/components/ui/spinner";
-import { signInFormSchema as formSchema } from "@/lib/formSchemas";
+import { signInFormSchema as formSchema } from "@/lib/form-schemas";
 import { SignInInput } from "@/types";
 import { signInEmailAction } from "@/lib/actions/sign-email.action";
 import { toast } from "sonner";

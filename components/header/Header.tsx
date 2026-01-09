@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import Image from "next/image";
-import { Menu, X, User, LogOut } from "lucide-react";
+import { Menu, X } from "lucide-react";
 
 import {
   NavigationMenu,
@@ -108,22 +108,12 @@ const Header = ({
           {!session ? (
             <GuestButtons variant="desktop" />
           ) : (
-            <div className="flex gap-4 items-center">
-              <Button asChild variant="ghost">
-                <Link href="/profile">
-                  <User className="w-4 h-4 mr-2" />
-                  {session.user.name}
-                </Link>
-              </Button>
-              <Button
-                disabled={isLoggingOut}
-                variant="destructive"
-                onClick={handleSignOut}
-              >
-                <LogOut className="w-4 h-4 mr-2" />
-                Çıkış Yap
-              </Button>
-            </div>
+            <UserMenuButtons
+              userName={session.user.name}
+              onSignOut={handleSignOut}
+              isLoggingOut={isLoggingOut}
+              variant="desktop"
+            />
           )}
         </div>
 
