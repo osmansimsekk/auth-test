@@ -68,7 +68,7 @@ const SignIn = () => {
 
             <Link
               href="/auth/forgot-password"
-              className="-mt-4 text-sm text-right text-foreground/50 hover:text-foreground hover:underline"
+              className="-mt-4 text-sm text-right text-foreground/50 hover:text-foreground hover:underline "
             >
               Şifrenizi mi unuttunuz?
             </Link>

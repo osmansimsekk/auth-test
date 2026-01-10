@@ -5,7 +5,7 @@ const AuthPage = () => {
   return (
     <Link
       href="/"
-      className="w-1/2 hidden items-center justify-center border-l-[0.1px] border-white/10 lg:flex group dark:hover:bg-white transition-all duration-300 ease-in dark:bg-background bg-white hover:bg-black"
+      className="w-1/2 hidden items-center justify-center border-l-[0.1px] border-white/10 lg:flex group dark:hover:bg-white transition-all duration-300 ease-in dark:bg-background bg-white hover:bg-black border-l-foreground/20"
     >
       <section>
         <Image

@@ -19,7 +19,7 @@ const ForgotPage = () => {
 
         {/* Açıklama */}
         <div>
-          <p className="inline-block pb-[0.5px] hover:border-foreground border-transparent border-b">
+          <p className="inline-block pb-1 border-b">
             Şifrenizi sıfırlamak için emailinizi girin.
           </p>
         </div>

@@ -61,7 +61,6 @@ const Header = ({
     <>
       {/* DESKTOP & MOBILE HEADER */}
       <header className="fixed top-0 left-0 right-0 z-50 grid grid-cols-2 lg:grid-cols-3 items-center border-b-[0.5px] px-4 lg:px-10 bg-background py-2">
-        
         {/* 1. Sol Sütun: Logo */}
         <div className="flex justify-start">
           <Link href="/" className="z-50 shrink-0">
@@ -152,7 +151,7 @@ const Header = ({
 
       {/* MOBILE MENU (OVERLAY) */}
       <header
-        className={`fixed inset-0 z-[9999] flex flex-col bg-background transition-all duration-300 ${
+        className={`fixed inset-0 z-9999 flex flex-col bg-background transition-all duration-300 ${
           menuOpen
             ? "translate-x-0 opacity-100 visible"
             : "translate-x-full opacity-0 invisible"
@@ -169,7 +168,7 @@ const Header = ({
           />
           <div className="flex items-center gap-2">
             <DarkModeToggle />
-            <Button  size="icon" onClick={() => setMenuOpen(false)}>
+            <Button size="icon" onClick={() => setMenuOpen(false)}>
               <X className="w-7 h-7" />
             </Button>
           </div>
@@ -214,9 +213,11 @@ const Header = ({
 
           {/* MOBİL BUTONLAR: Alt Kısım */}
           <div className="p-6 bg-muted/20 border-t w-full mt-auto">
-            <div className="w-full flex flex-col items-stretch gap-3 
+            <div
+              className="w-full flex flex-col items-stretch gap-3 
               [&_button]:w-full [&_button]:flex [&_button]:justify-center [&_button]:items-center
-              [&_a]:w-full [&_a]:flex [&_a]:justify-center [&_a]:items-center">
+              [&_a]:w-full [&_a]:flex [&_a]:justify-center [&_a]:items-center"
+            >
               {!session ? (
                 <GuestButtons
                   variant="mobile"
