@@ -27,7 +27,7 @@ export const GuestButtons = ({ variant, onClick }: GuestButtonsProps) => {
   }
 
   return (
-    <div className="flex flex-col gap-5 max-w-md">
+    <div className="flex flex-col gap-5">
       <Button variant="outline" asChild>
         <Link href="/auth/sign-in" onClick={onClick}>
           <User />

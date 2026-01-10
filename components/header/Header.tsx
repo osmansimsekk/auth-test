@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import Image from "next/image";
-import { Menu, X } from "lucide-react";
+import { Menu, X, User, LogOut } from "lucide-react";
 
 import {
   NavigationMenu,
@@ -59,18 +59,24 @@ const Header = ({
 
   return (
     <>
-      <header className="fixed top-0 left-0 right-0 z-50 grid grid-cols-3 items-center border-b-[0.5px] px-6 lg:px-10 bg-background py-2">
-        <Link href="/" className="z-50">
-          <Image
-            src="/images/logo.png"
-            alt="Logo"
-            width={90}
-            height={90}
-            className="invert dark:invert-0"
-          />
-        </Link>
+      {/* DESKTOP & MOBILE HEADER */}
+      <header className="fixed top-0 left-0 right-0 z-50 grid grid-cols-2 lg:grid-cols-3 items-center border-b-[0.5px] px-4 lg:px-10 bg-background py-2">
+        
+        {/* 1. Sol Sütun: Logo */}
+        <div className="flex justify-start">
+          <Link href="/" className="z-50 shrink-0">
+            <Image
+              src="/images/logo.png"
+              alt="Logo"
+              width={80}
+              height={80}
+              className="invert dark:invert-0 w-auto h-12 lg:h-16"
+            />
+          </Link>
+        </div>
 
-        <div className="hidden flex-1 lg:flex justify-center">
+        {/* 2. Orta Sütun: Desktop Nav (Sadece LG ve üzerinde görünür) */}
+        <div className="hidden lg:flex justify-center">
           <NavigationMenu viewport={isMobile}>
             <NavigationMenuList>
               {navigationData.map((category) => (
@@ -103,35 +109,56 @@ const Header = ({
           </NavigationMenu>
         </div>
 
-        <div className="hidden lg:flex gap-4 items-center justify-self-end">
-          <DarkModeToggle />
-          {!session ? (
-            <GuestButtons variant="desktop" />
-          ) : (
-            <UserMenuButtons
-              userName={session.user.name}
-              onSignOut={handleSignOut}
-              isLoggingOut={isLoggingOut}
-              variant="desktop"
-              userImage={session.user.image || ""}
-            />
-          )}
-        </div>
+        {/* 3. Sağ Sütun: Butonlar & Hamburger (Hizalama Sağda) */}
+        <div className="flex items-center justify-end gap-2 lg:gap-4">
+          {/* Sadece Desktop'ta görünen butonlar */}
+          <div className="hidden lg:flex gap-4 items-center">
+            <DarkModeToggle />
+            {!session ? (
+              <GuestButtons variant="desktop" />
+            ) : (
+              <div className="flex gap-4 items-center">
+                <Button asChild variant="outline">
+                  <Link href="/profile">
+                    <User className="w-4 h-4 mr-2" />
+                    {session.user.name}
+                  </Link>
+                </Button>
+                <Button
+                  disabled={isLoggingOut}
+                  variant="destructive"
+                  onClick={handleSignOut}
+                >
+                  <LogOut className="w-4 h-4 mr-2" />
+                  Çıkış Yap
+                </Button>
+              </div>
+            )}
+          </div>
 
-        <div className="lg:hidden ml-auto z-50">
-          <Button variant="ghost" size="icon" onClick={() => setMenuOpen(true)}>
-            <Menu className="w-7 h-7" />
-          </Button>
+          {/* Sadece Mobil'de görünen Hamburger Menü */}
+          <div className="lg:hidden flex items-center">
+            <Button
+              variant="ghost"
+              size="icon"
+              onClick={() => setMenuOpen(true)}
+              className="-mr-2 hover:bg-transparent"
+            >
+              <Menu className="w-8 h-8" />
+            </Button>
+          </div>
         </div>
       </header>
 
-      <div
-        className={`fixed inset-0 z-9999 flex flex-col bg-background transition-all duration-300 ${
+      {/* MOBILE MENU (OVERLAY) */}
+      <header
+        className={`fixed inset-0 z-[9999] flex flex-col bg-background transition-all duration-300 ${
           menuOpen
             ? "translate-x-0 opacity-100 visible"
             : "translate-x-full opacity-0 invisible"
         }`}
       >
+        {/* Mobile Menu Top Bar */}
         <div className="flex items-center justify-between px-6 py-4 border-b">
           <Image
             src="/images/logo.png"
@@ -142,16 +169,13 @@ const Header = ({
           />
           <div className="flex items-center gap-2">
             <DarkModeToggle />
-            <Button
-              variant="ghost"
-              size="icon"
-              onClick={() => setMenuOpen(false)}
-            >
-              <X className="w-6 h-6" />
+            <Button  size="icon" onClick={() => setMenuOpen(false)}>
+              <X className="w-7 h-7" />
             </Button>
           </div>
         </div>
 
+        {/* Mobile Menu Content */}
         <div className="flex flex-col flex-1 justify-between overflow-hidden">
           <div className="flex-1 overflow-y-auto px-6 py-4">
             <Accordion type="single" collapsible className="w-full">
@@ -188,25 +212,30 @@ const Header = ({
             </Accordion>
           </div>
 
-          <div className="p-6 bg-muted/20 border-t mt-auto">
-            {!session ? (
-              <GuestButtons
-                variant="mobile"
-                onClick={() => setMenuOpen(false)}
-              />
-            ) : (
-              <UserMenuButtons
-                variant="mobile"
-                userName={session.user.name}
-                userImage={session.user.image || ""}
-                isLoggingOut={isLoggingOut}
-                onSignOut={handleSignOut}
-                onCloseMenu={() => setMenuOpen(false)}
-              />
-            )}
+          {/* MOBİL BUTONLAR: Alt Kısım */}
+          <div className="p-6 bg-muted/20 border-t w-full mt-auto">
+            <div className="w-full flex flex-col items-stretch gap-3 
+              [&_button]:w-full [&_button]:flex [&_button]:justify-center [&_button]:items-center
+              [&_a]:w-full [&_a]:flex [&_a]:justify-center [&_a]:items-center">
+              {!session ? (
+                <GuestButtons
+                  variant="mobile"
+                  onClick={() => setMenuOpen(false)}
+                />
+              ) : (
+                <UserMenuButtons
+                  variant="mobile"
+                  userName={session.user.name}
+                  userImage={session.user.image || ""}
+                  isLoggingOut={isLoggingOut}
+                  onSignOut={handleSignOut}
+                  onCloseMenu={() => setMenuOpen(false)}
+                />
+              )}
+            </div>
           </div>
         </div>
-      </div>
+      </header>
     </>
   );
 };

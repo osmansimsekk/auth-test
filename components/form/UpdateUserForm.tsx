@@ -93,7 +93,7 @@ const UpdateUserForm = ({
           />
 
           <Button type="submit" disabled={form.formState.isSubmitting}>
-            {form.formState.isSubmitting ? "Güncelleniyor..." : "Kaydet"}
+            {form.formState.isSubmitting ? "Güncelleniyor..." : "Güncelle"}
           </Button>
         </form>
       </Form>
