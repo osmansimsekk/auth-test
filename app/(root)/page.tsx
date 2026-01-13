@@ -147,7 +147,7 @@ const Home = () => {
                   <span className="text-orange-400">true</span>,{"\n"} {"}"},
                   {"\n\n"}{" "}
                   <span className="text-white/40">
-                    // Özel Kullanıcı Alanları
+                    {"//"} Özel Kullanıcı Alanları
                   </span>
                   {"\n"} user: {"{"}
                   {"\n"} additionalFields: {"{"}
