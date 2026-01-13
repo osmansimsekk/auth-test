@@ -1,36 +1,84 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 🛡️ Better Auth - Next.js 16 
 
-## Getting Started
+Bu proje, **Next.js 16** ve **Better Auth** framework'ü kullanılarak inşa edilmiş, tip güvenliği (type-safety) ve kullanıcı deneyimi odaklı modern bir kimlik doğrulama şablonudur. Proje; gelişmiş veritabanı hook'ları, sosyal giriş yöntemleri ve genişletilmiş kullanıcı modelleri üzerine kapsamlı bir öğrenme çalışmasıdır.
 
-First, run the development server:
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## 🚀 Öne Çıkan Özellikler
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+* **Next.js 16 Ready:** En güncel Next.js sürümü (Edge/Experimental) ile tam uyumlu mimari.
+* **Social Auth (OAuth 2.0):** * **Google:** Hızlı ve güvenli Google hesabı ile giriş entegrasyonu.
+    * **GitHub:** Geliştiriciler için GitHub hesabı ile tek tıkla oturum açma.
+* **Gelişmiş Kullanıcı Modeli:** `additionalFields` kullanılarak `gender`, `country`, `lastName` ve `role` gibi ek alanların sisteme entegrasyonu.
+* **Database Hooks:** Kullanıcı oluşturulmadan önce çalışan (`create:before`) isim normalleştirme ve otomatik admin/user rol atama mantığı.
+* **Email & Verification:** Nodemailer entegrasyonu ile güvenli e-posta doğrulama ve şifre sıfırlama süreçleri.
+* **Modern UI/UX:** Shadcn UI, Tailwind CSS ve GSAP kullanılarak hazırlanan, estetik ve animasyonlu kullanıcı arayüzü.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## 🛠️ Teknoloji Yığını
 
-## Learn More
+| Teknoloji | Açıklama |
+| :--- | :--- |
+| **Framework** | Next.js 16 (App Router) |
+| **Authentication** | [Better Auth](https://www.better-auth.com/) |
+| **Database** | Neon DB (Serverless PostgreSQL) |
+| **ORM** | Prisma |
+| **Email Service** | Nodemailer |
+| **Animations** | GSAP |
 
-To learn more about Next.js, take a look at the following resources:
+## ⚙️ Kurulum ve Yapılandırma
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+1.  **Repoyu Klonlayın:**
+    ```bash
+    git clone [https://github.com/kullaniciadi/proje-adi.git](https://github.com/kullaniciadi/proje-adi.git)
+    cd proje-adi
+    ```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+2.  **Bağımlılıkları Yükleyin:**
+    ```bash
+    npm install
+    ```
 
-## Deploy on Vercel
+3.  **Çevresel Değişkenleri Ayarlayın:**
+    `.env` dosyası oluşturun ve aşağıdaki şablonu kendi değerlerinizle doldurun:
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+    ```env
+    # Better Auth Configuration
+    BETTER_AUTH_SECRET="your_secret_here"
+    BETTER_AUTH_URL="http://localhost:3000"
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+    # API Configuration
+    NEXT_PUBLIC_API_URL="http://localhost:3000"
+
+    # Database (Neon DB / PostgreSQL)
+    DATABASE_URL="your_postgresql_connection_string"
+
+    # App Settings
+    ADMIN_EMAILS="admin@example.com"
+    NODE_ENV="development"
+
+    # Social Providers (OAuth)
+    GOOGLE_CLIENT_ID="your_google_client_id"
+    GOOGLE_CLIENT_SECRET="your_google_client_secret"
+
+    GITHUB_CLIENT_ID="your_github_client_id"
+    GITHUB_CLIENT_SECRET="your_github_client_secret"
+
+    # Email Service (Nodemailer)
+    NODEMAILER_USER="your_email@gmail.com"
+    NODEMAILER_APP_PASSWORD="your_app_specific_password"
+    ```
+
+4.  **Veritabanını Hazırlayın:**
+    ```bash
+    npx prisma generate
+    npx prisma db push
+    ```
+
+5.  **Projeyi Başlatın:**
+    ```bash
+    npm run dev
+    ```
+
+## 📝 Proje Amacı
+
+Bu çalışma, **Better Auth** framework'ünün sunduğu esnek yapıyı (additional fields, database hooks, plugins) **Next.js 16** ortamında test etmek amacıyla geliştirilmiştir. Özellikle veritabanı seviyesindeki hook'ların veri bütünlüğünü nasıl sağladığı ve modern OAuth akışlarının nasıl optimize edildiği incelenmiştir.
