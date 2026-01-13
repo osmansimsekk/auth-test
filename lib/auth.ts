@@ -94,8 +94,7 @@ export const auth = betterAuth({
     user: {
       create: {
         before: async (user) => {
-          const ADMIN_EMAILS = process.env.ADMIN_EMAILS?.split(";") ?? [];
-          console.log(user);
+          // const ADMIN_EMAILS = process.env.ADMIN_EMAILS?.split(";") ?? [];
 
           let firstName = (user.name as string) || "";
           let lastName = (user.lastName as string) || "";
@@ -106,9 +105,9 @@ export const auth = betterAuth({
             lastName = split.lastName;
           }
 
-          const role = ADMIN_EMAILS.includes(user.email)
-            ? UserRole.ADMIN
-            : UserRole.USER;
+          // const role = ADMIN_EMAILS.includes(user.email)
+          //   ? UserRole.ADMIN
+          //   : UserRole.USER;
 
           return {
             data: {
@@ -118,7 +117,9 @@ export const auth = betterAuth({
               lastName: normalizeName(lastName!),
               gender: user.gender ?? "OTHER",
               country: user.country ?? "TR",
-              role: role,
+              // role: role,
+              // Herkesi admin yapmak için ->
+              role: UserRole.ADMIN,
             },
           };
         },

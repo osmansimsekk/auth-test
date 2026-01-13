@@ -28,7 +28,7 @@ export async function sendEmailAction({
   const mailOptions = {
     from: process.env.NODEMAILER_USER,
     to,
-    subject: `Auth-Test • ${subject}`,
+    subject: `AuthProject• ${subject}`,
     html: `
       <div style="${styles.body}">
         <div style="${styles.container}">
