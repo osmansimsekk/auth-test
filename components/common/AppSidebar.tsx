@@ -146,7 +146,7 @@ export function AppSidebar({
                       <SidebarMenuButton asChild>
                         <a href="/admin/dashboard">
                           <ShieldCheck className="text-orange-500" />
-                          <span>Admin Dashboard</span>
+                          <span>Admin Paneli</span>
                         </a>
                       </SidebarMenuButton>
                     </HoverCardTrigger>

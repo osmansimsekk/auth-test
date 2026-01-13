@@ -5,6 +5,13 @@ import AppSidebarProvider from "@/providers/AppSidebarProvider";
 import { redirect } from "next/navigation";
 import { headers } from "next/headers";
 import { UserRole } from "@/src/generated/prisma";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Auth Project | Profil",
+  description:
+    "Next.js 16 ile Better Auth öğrenme amacıyla yapılmış bir projedir.",
+};
 
 export const ProfileLayout = async ({
   children,
@@ -20,7 +27,6 @@ export const ProfileLayout = async ({
     headers: headersList,
     body: { permissions: { posts: ["update", "delete"] } },
   });
-  console.log("session user image:", session.user.image);
 
   return (
     <AppSidebarProvider>
