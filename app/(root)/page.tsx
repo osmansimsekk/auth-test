@@ -17,7 +17,7 @@ if (typeof window !== "undefined") {
   gsap.registerPlugin(ScrollTrigger);
 }
 
-export default function ElegantLanding() {
+const Home = () => {
   const containerRef = useRef(null);
 
   useEffect(() => {
@@ -234,4 +234,6 @@ export default function ElegantLanding() {
       </footer>
     </div>
   );
-}
+};
+
+export default Home;
