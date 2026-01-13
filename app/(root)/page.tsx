@@ -71,7 +71,7 @@ const Home = () => {
     >
       <div className="absolute top-0 left-0 w-full h-full -z-10 opacity-30 pointer-events-none">
         <div className="blob absolute top-1/4 left-1/4 w-96 h-96 bg-primary/20 blur-[120px] rounded-full" />
-        <div className="blob absolute bottom-1/4 right-1/4 w-[500px] h-[500px] bg-chart-2/10 blur-[150px] rounded-full" />
+        <div className="blob absolute bottom-1/4 right-1/4 w-125 h-125 bg-chart-2/10 blur-[150px] rounded-full" />
       </div>
 
       <section className="container mx-auto px-6 pt-32 lg:pt-48 pb-20">
@@ -85,7 +85,7 @@ const Home = () => {
               Next.js 16 Auth Mimarisi
             </div>
 
-            <h1 className="reveal-text text-5xl md:text-7xl font-bold tracking-tighter mb-6 bg-gradient-to-b from-foreground to-foreground/60 bg-clip-text text-transparent">
+            <h1 className="reveal-text text-5xl md:text-7xl font-bold tracking-tighter mb-6 bg-linear-to-b from-foreground to-foreground/60 bg-clip-text text-transparent">
               Modern Auth <br /> Better Auth.
             </h1>
 
@@ -118,7 +118,7 @@ const Home = () => {
           </div>
 
           <div className="code-window relative hidden lg:block">
-            <div className="absolute -inset-1 bg-gradient-to-r from-primary/20 to-chart-2/20 rounded-2xl blur opacity-30" />
+            <div className="absolute -inset-1 bg-linear-to-r from-primary/20 to-chart-2/20 rounded-2xl blur opacity-30" />
             <div className="relative rounded-2xl border border-white/10 bg-[#0a0a0a] shadow-2xl overflow-hidden font-mono text-[13px] leading-relaxed">
               <div className="flex items-center justify-between px-4 py-3 border-b border-white/5 bg-white/5">
                 <div className="flex gap-1.5">
