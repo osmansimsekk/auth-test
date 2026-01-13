@@ -1,84 +1,88 @@
-# 🛡️ Better Auth - Next.js 16 
+# 🛡️ Better Auth – Next.js 16
 
-Bu proje, **Next.js 16** ve **Better Auth** framework'ü kullanılarak inşa edilmiş, tip güvenliği (type-safety) ve kullanıcı deneyimi odaklı modern bir kimlik doğrulama şablonudur. Proje; gelişmiş veritabanı hook'ları, sosyal giriş yöntemleri ve genişletilmiş kullanıcı modelleri üzerine kapsamlı bir öğrenme çalışmasıdır.
+This project is a modern authentication starter built with **Next.js 16** and the **Better Auth** framework, focusing on strong type safety and an excellent developer/user experience. It is a comprehensive learning project covering advanced database hooks, social authentication methods, and extended user models.
 
+## 🚀 Key Features
 
+* **Next.js 16 Ready:** Fully compatible architecture with the latest Next.js version (Edge/Experimental).
+* **Social Auth (OAuth 2.0):**
 
-## 🚀 Öne Çıkan Özellikler
+  * **Google:** Fast and secure sign-in with Google accounts.
+  * **GitHub:** One-click authentication using GitHub, ideal for developers.
+* **Advanced User Model:** Integration of extra fields such as `gender`, `country`, `lastName`, and `role` using `additionalFields`.
+* **Database Hooks:** Pre-user-creation hooks (`create:before`) for name normalization and automatic admin/user role assignment.
+* **Email & Verification:** Secure email verification and password reset flows via Nodemailer.
+* **Modern UI/UX:** A polished and animated interface built with Shadcn UI, Tailwind CSS, and GSAP.
 
-* **Next.js 16 Ready:** En güncel Next.js sürümü (Edge/Experimental) ile tam uyumlu mimari.
-* **Social Auth (OAuth 2.0):** * **Google:** Hızlı ve güvenli Google hesabı ile giriş entegrasyonu.
-    * **GitHub:** Geliştiriciler için GitHub hesabı ile tek tıkla oturum açma.
-* **Gelişmiş Kullanıcı Modeli:** `additionalFields` kullanılarak `gender`, `country`, `lastName` ve `role` gibi ek alanların sisteme entegrasyonu.
-* **Database Hooks:** Kullanıcı oluşturulmadan önce çalışan (`create:before`) isim normalleştirme ve otomatik admin/user rol atama mantığı.
-* **Email & Verification:** Nodemailer entegrasyonu ile güvenli e-posta doğrulama ve şifre sıfırlama süreçleri.
-* **Modern UI/UX:** Shadcn UI, Tailwind CSS ve GSAP kullanılarak hazırlanan, estetik ve animasyonlu kullanıcı arayüzü.
+## 🛠️ Tech Stack
 
-## 🛠️ Teknoloji Yığını
-
-| Teknoloji | Açıklama |
-| :--- | :--- |
-| **Framework** | Next.js 16 (App Router) |
+| Technology         | Description                                 |
+| :----------------- | :------------------------------------------ |
+| **Framework**      | Next.js 16 (App Router)                     |
 | **Authentication** | [Better Auth](https://www.better-auth.com/) |
-| **Database** | Neon DB (Serverless PostgreSQL) |
-| **ORM** | Prisma |
-| **Email Service** | Nodemailer |
-| **Animations** | GSAP |
+| **Database**       | Neon DB (Serverless PostgreSQL)             |
+| **ORM**            | Prisma                                      |
+| **Email Service**  | Nodemailer                                  |
+| **Animations**     | GSAP                                        |
 
-## ⚙️ Kurulum ve Yapılandırma
+## ⚙️ Installation & Setup
 
-1.  **Repoyu Klonlayın:**
-    ```bash
-    git clone [https://github.com/kullaniciadi/proje-adi.git](https://github.com/kullaniciadi/proje-adi.git)
-    cd proje-adi
-    ```
+1. **Clone the Repository:**
 
-2.  **Bağımlılıkları Yükleyin:**
-    ```bash
-    npm install
-    ```
+   ```bash
+   git clone https://github.com/username/project-name.git
+   cd project-name
+   ```
 
-3.  **Çevresel Değişkenleri Ayarlayın:**
-    `.env` dosyası oluşturun ve aşağıdaki şablonu kendi değerlerinizle doldurun:
+2. **Install Dependencies:**
 
-    ```env
-    # Better Auth Configuration
-    BETTER_AUTH_SECRET="your_secret_here"
-    BETTER_AUTH_URL="http://localhost:3000"
+   ```bash
+   npm install
+   ```
 
-    # API Configuration
-    NEXT_PUBLIC_API_URL="http://localhost:3000"
+3. **Configure Environment Variables:**
+   Create a `.env` file and fill it with your own values based on the template below:
 
-    # Database (Neon DB / PostgreSQL)
-    DATABASE_URL="your_postgresql_connection_string"
+   ```env
+   # Better Auth Configuration
+   BETTER_AUTH_SECRET="your_secret_here"
+   BETTER_AUTH_URL="http://localhost:3000"
 
-    # App Settings
-    ADMIN_EMAILS="admin@example.com"
-    NODE_ENV="development"
+   # API Configuration
+   NEXT_PUBLIC_API_URL="http://localhost:3000"
 
-    # Social Providers (OAuth)
-    GOOGLE_CLIENT_ID="your_google_client_id"
-    GOOGLE_CLIENT_SECRET="your_google_client_secret"
+   # Database (Neon DB / PostgreSQL)
+   DATABASE_URL="your_postgresql_connection_string"
 
-    GITHUB_CLIENT_ID="your_github_client_id"
-    GITHUB_CLIENT_SECRET="your_github_client_secret"
+   # App Settings
+   ADMIN_EMAILS="admin@example.com"
+   NODE_ENV="development"
 
-    # Email Service (Nodemailer)
-    NODEMAILER_USER="your_email@gmail.com"
-    NODEMAILER_APP_PASSWORD="your_app_specific_password"
-    ```
+   # Social Providers (OAuth)
+   GOOGLE_CLIENT_ID="your_google_client_id"
+   GOOGLE_CLIENT_SECRET="your_google_client_secret"
 
-4.  **Veritabanını Hazırlayın:**
-    ```bash
-    npx prisma generate
-    npx prisma db push
-    ```
+   GITHUB_CLIENT_ID="your_github_client_id"
+   GITHUB_CLIENT_SECRET="your_github_client_secret"
 
-5.  **Projeyi Başlatın:**
-    ```bash
-    npm run dev
-    ```
+   # Email Service (Nodemailer)
+   NODEMAILER_USER="your_email@gmail.com"
+   NODEMAILER_APP_PASSWORD="your_app_specific_password"
+   ```
 
-## 📝 Proje Amacı
+4. **Prepare the Database:**
 
-Bu çalışma, **Better Auth** framework'ünün sunduğu esnek yapıyı (additional fields, database hooks, plugins) **Next.js 16** ortamında test etmek amacıyla geliştirilmiştir. Özellikle veritabanı seviyesindeki hook'ların veri bütünlüğünü nasıl sağladığı ve modern OAuth akışlarının nasıl optimize edildiği incelenmiştir.
+   ```bash
+   npx prisma generate
+   npx prisma db push
+   ```
+
+5. **Start the Development Server:**
+
+   ```bash
+   npm run dev
+   ```
+
+## 📝 Project Purpose
+
+This project was developed to explore and test the flexibility of the **Better Auth** framework (additional fields, database hooks, plugins) within a **Next.js 16** environment. It particularly focuses on how database-level hooks ensure data integrity and how modern OAuth flows can be optimized for real-world applications.
