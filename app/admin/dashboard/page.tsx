@@ -39,10 +39,6 @@ const Page = async () => {
 
   return (
     <div className="py-10 px-10 min-h-screen w-screen">
-      <Button asChild>
-        <Link href="/">Ana Sayfa</Link>
-      </Button>
-      <h1 className="text-4xl text-center mb-10">ADMIN DASHBOARD</h1>
       <UserTable users={users} />
     </div>
   );

@@ -71,7 +71,6 @@ const ResetPasswordForm = ({ token }: { token: string }) => {
               error={form.formState.errors.passwordConfirm?.message}
             />
 
-            {/* Button wrapper */}
             <div className="flex justify-center mt-4">
               <Button type="submit" disabled={form.formState.isSubmitting}>
                 {form.formState.isSubmitting ? (

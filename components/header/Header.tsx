@@ -1,8 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import Image from "next/image";
-import { Menu, X, User, LogOut } from "lucide-react";
+import { Menu, X, User, LogOut, Shield } from "lucide-react";
 
 import {
   NavigationMenu,
@@ -59,22 +58,19 @@ const Header = ({
 
   return (
     <>
-      {/* DESKTOP & MOBILE HEADER */}
-      <header className="fixed top-0 left-0 right-0 z-50 grid grid-cols-2 lg:grid-cols-3 items-center border-b-[0.5px] px-4 lg:px-10 bg-background py-2">
-        {/* 1. Sol Sütun: Logo */}
+      <header className="fixed top-0 left-0 right-0 z-50 grid grid-cols-2 lg:grid-cols-3 items-center border-b-[0.5px] px-4 lg:px-10 bg-background py-4">
         <div className="flex justify-start">
-          <Link href="/" className="z-50 shrink-0">
-            <Image
-              src="/images/logo.png"
-              alt="Logo"
-              width={80}
-              height={80}
-              className="invert dark:invert-0 w-auto h-12 lg:h-16"
-            />
+          <Link href="/" className="flex items-center gap-2 group shrink-0">
+            <div className="bg-primary p-2 rounded-lg group-hover:rotate-6 transition-transform">
+              <Shield className="w-6 h-6 text-primary-foreground" />
+            </div>
+            <span className="font-bold text-xl tracking-tighter">
+              Auth
+              <span className="text-muted-foreground font-light">Project</span>
+            </span>
           </Link>
         </div>
 
-        {/* 2. Orta Sütun: Desktop Nav (Sadece LG ve üzerinde görünür) */}
         <div className="hidden lg:flex justify-center">
           <NavigationMenu viewport={isMobile}>
             <NavigationMenuList>
@@ -85,21 +81,31 @@ const Header = ({
                   </NavigationMenuTrigger>
                   <NavigationMenuContent>
                     <ul className="flex flex-col w-[320px] gap-1 p-2">
-                      {category.items.map((item) => (
-                        <li key={item.href}>
-                          <NavigationMenuLink asChild>
-                            <Link
-                              href={item.href}
-                              className="block rounded-md p-2 hover:bg-muted transition"
-                            >
-                              <div className="font-medium">{item.title}</div>
-                              <div className="text-muted-foreground text-sm">
-                                {item.description}
-                              </div>
-                            </Link>
-                          </NavigationMenuLink>
-                        </li>
-                      ))}
+                      {category.items.map((item) => {
+                        const isExternal =
+                          category.trigger === "Kaynaklar" ||
+                          item.href.startsWith("http");
+
+                        return (
+                          <li key={item.href}>
+                            <NavigationMenuLink asChild>
+                              <Link
+                                href={item.href}
+                                target={isExternal ? "_blank" : "_self"}
+                                rel={
+                                  isExternal ? "noopener noreferrer" : undefined
+                                }
+                                className="block rounded-md p-2 hover:bg-muted transition"
+                              >
+                                <div className="font-medium">{item.title}</div>
+                                <div className="text-muted-foreground text-sm">
+                                  {item.description}
+                                </div>
+                              </Link>
+                            </NavigationMenuLink>
+                          </li>
+                        );
+                      })}
                     </ul>
                   </NavigationMenuContent>
                 </NavigationMenuItem>
@@ -108,9 +114,7 @@ const Header = ({
           </NavigationMenu>
         </div>
 
-        {/* 3. Sağ Sütun: Butonlar & Hamburger (Hizalama Sağda) */}
         <div className="flex items-center justify-end gap-2 lg:gap-4">
-          {/* Sadece Desktop'ta görünen butonlar */}
           <div className="hidden lg:flex gap-4 items-center">
             <DarkModeToggle />
             {!session ? (
@@ -135,7 +139,6 @@ const Header = ({
             )}
           </div>
 
-          {/* Sadece Mobil'de görünen Hamburger Menü */}
           <div className="lg:hidden flex items-center">
             <Button
               variant="ghost"
@@ -149,7 +152,6 @@ const Header = ({
         </div>
       </header>
 
-      {/* MOBILE MENU (OVERLAY) */}
       <header
         className={`fixed inset-0 z-9999 flex flex-col bg-background transition-all duration-300 ${
           menuOpen
@@ -157,15 +159,12 @@ const Header = ({
             : "translate-x-full opacity-0 invisible"
         }`}
       >
-        {/* Mobile Menu Top Bar */}
         <div className="flex items-center justify-between px-6 py-4 border-b">
-          <Image
-            src="/images/logo.png"
-            alt="Logo"
-            width={70}
-            height={70}
-            className="invert dark:invert-0"
-          />
+          {/* Mobil Menü Logo */}
+          <div className="flex items-center gap-2">
+            <Shield className="w-6 h-6 text-primary" />
+            <span className="font-bold text-lg">AuthProject</span>
+          </div>
           <div className="flex items-center gap-2">
             <DarkModeToggle />
             <Button size="icon" onClick={() => setMenuOpen(false)}>
@@ -174,7 +173,6 @@ const Header = ({
           </div>
         </div>
 
-        {/* Mobile Menu Content */}
         <div className="flex flex-col flex-1 justify-between overflow-hidden">
           <div className="flex-1 overflow-y-auto px-6 py-4">
             <Accordion type="single" collapsible className="w-full">
@@ -189,21 +187,29 @@ const Header = ({
                   </AccordionTrigger>
                   <AccordionContent>
                     <div className="flex flex-col gap-6 pl-2 pb-4 mt-2">
-                      {category.items.map((item) => (
-                        <Link
-                          key={item.href}
-                          href={item.href}
-                          onClick={() => setMenuOpen(false)}
-                          className="group"
-                        >
-                          <div className="font-semibold text-lg text-foreground group-hover:text-primary transition-colors">
-                            {item.title}
-                          </div>
-                          <div className="text-sm text-muted-foreground">
-                            {item.description}
-                          </div>
-                        </Link>
-                      ))}
+                      {category.items.map((item) => {
+                        const isExternal =
+                          category.trigger === "Kaynaklar" ||
+                          item.href.startsWith("http");
+
+                        return (
+                          <Link
+                            key={item.href}
+                            href={item.href}
+                            target={isExternal ? "_blank" : "_self"}
+                            rel={isExternal ? "noopener noreferrer" : undefined}
+                            onClick={() => !isExternal && setMenuOpen(false)}
+                            className="group"
+                          >
+                            <div className="font-semibold text-lg text-foreground group-hover:text-primary transition-colors">
+                              {item.title}
+                            </div>
+                            <div className="text-sm text-muted-foreground">
+                              {item.description}
+                            </div>
+                          </Link>
+                        );
+                      })}
                     </div>
                   </AccordionContent>
                 </AccordionItem>
@@ -211,13 +217,8 @@ const Header = ({
             </Accordion>
           </div>
 
-          {/* MOBİL BUTONLAR: Alt Kısım */}
           <div className="p-6 bg-muted/20 border-t w-full mt-auto">
-            <div
-              className="w-full flex flex-col items-stretch gap-3 
-              [&_button]:w-full [&_button]:flex [&_button]:justify-center [&_button]:items-center
-              [&_a]:w-full [&_a]:flex [&_a]:justify-center [&_a]:items-center"
-            >
+            <div className="w-full flex flex-col items-stretch gap-3">
               {!session ? (
                 <GuestButtons
                   variant="mobile"

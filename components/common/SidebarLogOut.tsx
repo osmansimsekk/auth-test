@@ -12,7 +12,6 @@ const SidebarLogOut = () => {
   const [isPending, setIsPending] = useState(false);
 
   const handleSignOut = async (e: React.MouseEvent) => {
-    // Menü butonunun tıklama olayını tetiklemesini engelle
     e.preventDefault();
     e.stopPropagation();
 

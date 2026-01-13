@@ -1,6 +1,6 @@
 "use client";
 
-import { Home, ShieldCheck, FileText, User, Lock } from "lucide-react";
+import { Home, ShieldCheck, User, Lock } from "lucide-react";
 import { UserRole } from "@/src/generated/prisma";
 import {
   Sidebar,
@@ -22,7 +22,6 @@ import {
 import { Separator } from "@/components/ui/separator";
 import Link from "next/link";
 import SidebarLogOut from "./SidebarLogOut";
-import Image from "next/image";
 import { useAppSidebar } from "@/providers/AppSidebarProvider";
 import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
 
@@ -49,15 +48,6 @@ export function AppSidebar({
         <SidebarMenu>
           <SidebarMenuItem>
             <SidebarMenuButton size="lg" className="pointer-events-none">
-              <div className="flex aspect-square size-8 items-center justify-center rounded-lg text-primary-foreground">
-                <Image
-                  src="/images/logo.png"
-                  alt="Logo"
-                  width={50}
-                  height={50}
-                  className="invert dark:invert-0"
-                />
-              </div>
               <div className="grid flex-1 text-left text-sm leading-tight group-data-[state=collapsed]:hidden">
                 <span className="truncate font-semibold text-lg">Profil</span>
               </div>
@@ -67,7 +57,6 @@ export function AppSidebar({
       </SidebarHeader>
 
       <SidebarContent>
-        {/* GENEL GRUBU */}
         <SidebarGroup>
           <SidebarGroupLabel className="group-data-[state=collapsed]:hidden px-4">
             Genel
@@ -86,13 +75,11 @@ export function AppSidebar({
           </SidebarGroupContent>
         </SidebarGroup>
 
-        {/* PROFİL YÖNETİMİ GRUBU */}
         <SidebarGroup>
           <SidebarGroupLabel className="group-data-[state=collapsed]:hidden px-4">
             Profil Yönetimi
           </SidebarGroupLabel>
           <SidebarMenu>
-            {/* Kişisel Bilgiler */}
             <SidebarMenuItem>
               <HoverCard openDelay={200}>
                 <HoverCardTrigger asChild>
@@ -117,7 +104,6 @@ export function AppSidebar({
               </HoverCard>
             </SidebarMenuItem>
 
-            {/* Güvenlik */}
             <SidebarMenuItem>
               <HoverCard openDelay={200}>
                 <HoverCardTrigger asChild>
@@ -144,7 +130,6 @@ export function AppSidebar({
           </SidebarMenu>
         </SidebarGroup>
 
-        {/* YÖNETİM GRUBU */}
         {(session.user.role === UserRole.ADMIN || fullPostAccess.success) && (
           <SidebarGroup>
             <div className="group-data-[state=collapsed]:hidden py-2 px-4">
@@ -177,35 +162,6 @@ export function AppSidebar({
                           <p className="text-xs text-muted-foreground">
                             Kullanıcı yetkileri ve sistem istatistiklerine tam
                             erişim.
-                          </p>
-                        </div>
-                      </div>
-                    </HoverCardContent>
-                  </HoverCard>
-                </SidebarMenuItem>
-              )}
-
-              {fullPostAccess.success && (
-                <SidebarMenuItem>
-                  <HoverCard openDelay={200}>
-                    <HoverCardTrigger asChild>
-                      <SidebarMenuButton>
-                        <FileText className="text-blue-500" />
-                        <span>Tüm Yazılar</span>
-                      </SidebarMenuButton>
-                    </HoverCardTrigger>
-                    <HoverCardContent
-                      side="right"
-                      align="start"
-                      className="w-64 z-100"
-                    >
-                      <div className="flex gap-3">
-                        <FileText className="size-5 text-blue-500 shrink-0" />
-                        <div className="space-y-1">
-                          <p className="text-sm font-medium">İçerik Yönetimi</p>
-                          <p className="text-xs text-muted-foreground">
-                            Tüm blog yazılarını, yorumları ve taslakları
-                            düzenleyin.
                           </p>
                         </div>
                       </div>
