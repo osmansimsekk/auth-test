@@ -1,4 +1,3 @@
-// public/data/contants.ts
 export const navigationData = [
   {
     trigger: "Dashboard",
@@ -16,7 +15,7 @@ export const navigationData = [
     ],
   },
   {
-    trigger: "Kaynaklar", // Hover olunca bunlar çıkacak
+    trigger: "Kaynaklar",
     items: [
       {
         title: "Better Auth",
